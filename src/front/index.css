@@ -1,0 +1,29 @@
+.donations {
+  background-image: url("./assets/img/backGroundDonaciones.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .donations {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+.card-donations {
+  max-width: 500px;
+  min-width: 300px;
+}
+.texto-hero {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+  max-width: 550px;
+}
+.texto-hero h1,
+.texto-hero p,
+.texto-hero h2 {
+  margin-bottom: 12px;
+}
