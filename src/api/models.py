@@ -57,6 +57,7 @@ class User(db.Model):
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
+    salt: Mapped[str] = mapped_column(String(180), nullable=False)
 
     favorites: Mapped[list["Favorite"]] = db.relationship(
         back_populates="user")
