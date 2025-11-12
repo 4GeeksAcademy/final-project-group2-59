@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Toaster, toast } from "sonner"
+import ".././register.css"
 
 const initialUser = {
     fullname: "",
