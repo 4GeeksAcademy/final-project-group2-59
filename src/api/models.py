@@ -3,191 +3,190 @@ from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 import enum
 from datetime import datetime, timezone
-from typing import List
+
 
 db = SQLAlchemy()
 
 
-class generoUsuarioEnum(enum.Enum):
+class genderUserEnum(enum.Enum):
     MASCULINO = "Masculino"
     FEMENINO = "Femenino"
     OTRO = "Otro"
 
 
-class estatusUsuarioEnum(enum.Enum):
-    ACTIVO = "Activo"
-    INACTIVO = "Inactivo"
-    BANEADO = "Baneado"
+class statusUserEnum(enum.Enum):
+    ACTIVE = "Activo"
+    INACTIVE = "Inactivo"
+    BANNED = "Baneado"
 
-
-class rolUsuarioEnum(enum.Enum):
+class roleUserEnum(enum.Enum):
     ADMIN = "Admin"
-    USUARIO = "Usuario"
+    USER = "Usuario"
 
 
-class especieMascotaEnum(enum.Enum):
-    PERRO = "Perro"
-    GATO = "Gato"
-    OTRO = "Otro"
+class speciesPetEnum(enum.Enum):
+    DOG = "Perro"
+    CAT = "Gato"
+    OTHER = "Otro"
 
 
-class sexoMascotaEnum(enum.Enum):
-    MACHO = "Macho"
-    HEMBRA = "Hembra"
+class sexPetEnum(enum.Enum):
+    MALE = "Macho"
+    FEMALE = "Hembra"
 
 
-class estatusMascotaEnum(enum.Enum):
-    ADOPTADO = "Adoptado"
-    BUSCANDO_FAMILIA = "Buscando Familia"
+class statusPetEnum(enum.Enum):
+    ADOPTED = "Adoptado"
+    LOOKING_FOR_FAMILY = "Buscando Familia"
 
 
-class Usuario(db.Model):
+class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    nombre_completo: Mapped[str] = mapped_column(String(100), nullable=False)
-    fecha_nacimiento: Mapped[datetime] = mapped_column(
+    full_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    birthdate: Mapped[datetime] = mapped_column(
         db.DateTime(timezone=True), nullable=False)
-    genero: Mapped[generoUsuarioEnum] = mapped_column(
-        db.Enum(generoUsuarioEnum), nullable=False)
-    correo_electronico: Mapped[str] = mapped_column(
+    gender: Mapped[genderUserEnum] = mapped_column(
+        db.Enum(genderUserEnum), nullable=False)
+    email: Mapped[str] = mapped_column(
         String(100), unique=True, nullable=False)
     avatar: Mapped[str] = mapped_column(String(255), nullable=True)
-    estatus: Mapped[estatusUsuarioEnum] = mapped_column(
-        db.Enum(estatusUsuarioEnum), nullable=False)
-    rol: Mapped[rolUsuarioEnum] = mapped_column(
-        db.Enum(rolUsuarioEnum), nullable=False)
+    status: Mapped[statusUserEnum] = mapped_column(
+        db.Enum(statusUserEnum), nullable=False)
+    role: Mapped[roleUserEnum] = mapped_column(
+        db.Enum(roleUserEnum), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
-    contrasena: Mapped[str] = mapped_column(String(255), nullable=False)
+    password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    favoritos: Mapped[list["Favorito"]] = db.relationship(
-        back_populates="usuario")
-    gastos: Mapped[list["Gastos"]] = db.relationship(back_populates="usuario")
+    favorites: Mapped[list["Favorite"]] = db.relationship(
+        back_populates="user")
+    bills: Mapped[list["Bills"]] = db.relationship(back_populates="user")
 
     def __repr__(self):
-        return f"<Usuario {self.nombre_completo}>"
+        return f"<User {self.full_name}>"
 
     def serialize(self):
         return {
             "id": self.id,
-            "nombre_completo": self.nombre_completo,
-            "fecha_nacimiento": self.fecha_nacimiento.isoformat(),
-            "genero": self.genero.value,
-            "correo_electronico": self.correo_electronico,
+            "full_name": self.full_name,
+            "birthdate": self.birthdate.isoformat(),
+            "gender": self.gender.value,
+            "email": self.email,
             "avatar": self.avatar,
-            "estatus": self.estatus.value,
-            "rol": self.rol.value,
+            "status": self.status.value,
+            "role": self.role.value,
             "created_at": self.created_at.isoformat()
         }
 
 
-class Mascota(db.Model):
+class Pet(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
-    fecha_nacimiento: Mapped[datetime] = mapped_column(
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    birthdate: Mapped[datetime] = mapped_column(
         db.DateTime(timezone=True), nullable=False)
-    especie: Mapped[especieMascotaEnum] = mapped_column(
-        db.Enum(especieMascotaEnum), nullable=False)
-    raza: Mapped[str] = mapped_column(
+    species: Mapped[speciesPetEnum] = mapped_column(
+        db.Enum(speciesPetEnum), nullable=False)
+    breed: Mapped[str] = mapped_column(
         String(100), nullable=True, default="Mestizo")
-    sexo: Mapped[sexoMascotaEnum] = mapped_column(
-        db.Enum(sexoMascotaEnum), nullable=False)
-    estatus: Mapped[estatusMascotaEnum] = mapped_column(
-        db.Enum(estatusMascotaEnum), nullable=False)
+    sex: Mapped[sexPetEnum] = mapped_column(
+        db.Enum(sexPetEnum), nullable=False)
+    status: Mapped[statusPetEnum] = mapped_column(
+        db.Enum(statusPetEnum), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
-    descripcion: Mapped[str] = mapped_column(String(500), nullable=True)
-    imagen: Mapped[str] = mapped_column(String(255), nullable=True)
+    description: Mapped[str] = mapped_column(String(500), nullable=True)
+    image: Mapped[str] = mapped_column(String(255), nullable=True)
 
-    favoritos: Mapped[list["Favorito"]] = db.relationship(
-        back_populates="mascota")
+    favorites: Mapped[list["Favorite"]] = db.relationship(
+        back_populates="pet")
 
     def __repr__(self):
-        return f"<Mascota {self.nombre}>"
+        return f"<Pet {self.name}>"
 
     def serialize(self):
         return {
             "id": self.id,
-            "nombre": self.nombre,
-            "fecha_nacimiento": self.fecha_nacimiento.isoformat(),
-            "especie": self.especie.value,
-            "raza": self.raza,
-            "sexo": self.sexo.value,
-            "estatus": self.estatus.value,
+            "name": self.name,
+            "birthdate": self.birthdate.isoformat(),
+            "species": self.species.value,
+            "breed": self.breed,
+            "sex": self.sex.value,
+            "status": self.status.value,
             "created_at": self.created_at.isoformat(),
-            "descripcion": self.descripcion,
-            "imagen": self.imagen
+            "description": self.description,
+            "image": self.image
         }
 
 
-class Favorito(db.Model):
+class Favorite(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    usuario_id: Mapped[int] = mapped_column(
-        db.ForeignKey('usuario.id'), nullable=False)
-    mascota_id: Mapped[int] = mapped_column(
-        db.ForeignKey('mascota.id'), nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        db.ForeignKey('user.id'), nullable=False)
+    pet_id: Mapped[int] = mapped_column(
+        db.ForeignKey('pet.id'), nullable=False)
 
-    usuario: Mapped["Usuario"] = db.relationship(back_populates="favoritos")
-    mascota: Mapped["Mascota"] = db.relationship(back_populates="favoritos")
+    user: Mapped["User"] = db.relationship(back_populates="favorites")
+    pet: Mapped["Pet"] = db.relationship(back_populates="favorites")
 
     def __repr__(self):
-        return f"<Favorito UsuarioID: {self.usuario_id}, MascotaID: {self.mascota_id}>"
+        return f"<Favorite UserID: {self.user_id}, PetID: {self.pet_id}>"
 
     def serialize(self):
         return {
             "id": self.id,
-            "usuario_id": self.usuario_id,
-            "mascota_id": self.mascota_id
+            "user_id": self.user_id,
+            "pet_id": self.pet_id
         }
 
 
-class Gastos(db.Model):
+class Bills(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
-    monto: Mapped[float] = mapped_column(nullable=False)
-    descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
-    numero_transaccion: Mapped[str] = mapped_column(String(100), nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    amount: Mapped[float] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(String(255), nullable=True)
+    transaction_number: Mapped[str] = mapped_column(String(100), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
-    usuario_id: Mapped[int] = mapped_column(
-        db.ForeignKey('usuario.id'), nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        db.ForeignKey('user.id'), nullable=False)
 
-    usuario: Mapped["Usuario"] = db.relationship(back_populates="gastos")
+    user: Mapped["User"] = db.relationship(back_populates="bills")
 
     def __repr__(self):
-        return f"<Gastos {self.nombre} - Monto: {self.monto}>"
+        return f"<Expense {self.name} - Amount: {self.amount}>"
 
     def serialize(self):
         return {
             "id": self.id,
-            "nombre": self.nombre,
-            "monto": self.monto,
-            "descripcion": self.descripcion,
-            "numero_transaccion": self.numero_transaccion,
+            "name": self.name,
+            "amount": self.amount,
+            "description": self.description,
+            "transaction_number": self.transaction_number,
             "created_at": self.created_at.isoformat(),
-            "usuario_id": self.usuario_id
+            "user_id": self.user_id
         }
 
 
-class Donaciones(db.Model):
+class Donation(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
-    numero_transaccion: Mapped[str] = mapped_column(String(100), nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    transaction_number: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(100), nullable=False)
-    monto: Mapped[float] = mapped_column(nullable=False)
+    amount: Mapped[float] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
-    mensaje: Mapped[str] = mapped_column(String(255), nullable=True)
+    message: Mapped[str] = mapped_column(String(255), nullable=True)
 
     def __repr__(self):
-        return f"<Donacion {self.nombre} - Monto: {self.monto}>"
+        return f"<Donation {self.name} - Amount: {self.amount}>"
 
     def serialize(self):
         return {
             "id": self.id,
-            "nombre": self.nombre,
-            "numero_transaccion": self.numero_transaccion,
+            "name": self.name,
+            "transaction_number": self.transaction_number,
             "email": self.email,
-            "monto": self.monto,
+            "amount": self.amount,
             "created_at": self.created_at.isoformat(),
-            "mensaje": self.mensaje
+            "message": self.message
         }
