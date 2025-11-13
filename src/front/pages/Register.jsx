@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Toaster, toast } from "sonner"
-import ".././register.css"
+import "../styles/pages/./Register.css"
 
 const initialUser = {
     fullname: "",
@@ -30,7 +30,7 @@ export const Register = () => {
         })
     }
 
-    const handleConfirmChange = ({target}) => {
+    const handleConfirmChange = ({ target }) => {
         setConfirmPassword(target.value)
 
         if (user.password && target.value !== user.password) {
@@ -46,7 +46,7 @@ export const Register = () => {
         }
     }
 
-    const handleFileChange = ({target}) => {
+    const handleFileChange = ({ target }) => {
         const file = target.files[0]
 
         setUser({
@@ -57,7 +57,7 @@ export const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        
+
         if (user.password !== confirmPassword) {
             setError((prev) => ({
                 ...prev,
@@ -79,8 +79,8 @@ export const Register = () => {
             method: "POST",
             body: formData
         })
-        
-        if (response.ok){
+
+        if (response.ok) {
             setUser(initialUser)
             fileInputRef.current.value = null
 
@@ -97,20 +97,34 @@ export const Register = () => {
     return (
         <div className="container vh-100 d-flex flex-column mt-5">
             <Toaster position="top-center" />
-            <div className="row justify-content-center">
-                <h1 className="text-center mb-4">Register</h1>
-                <div className="col-12 col-md-6">
+            <div className="container-blue container-fluid position-relative mt-4 rounded">
+                <div className="position-absolute top-0 start-0 h-100 w-50 d-none d-md-flex justify-content-center text-white">
+                    <div className="text-center">
+
+                        {/* Texto y botón */}
+                        <div className="mt-5 pt-5">
+                            <h4 className="mb-3">¿Ya tienes una cuenta?</h4>
+                            <p className="mb-4">
+                                Inicia Sesión para que seas parte de nuestra comunidad
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div className="position-absolute top-50 end-0 translate-middle">
                     <form
-                        className="border-top border-bottom border-secondary p-5"
+                        className="p-5 bg-white"
                         onSubmit={handleSubmit}
                     >
+                        <h1 className="text-center mb-4">Registrar</h1>
                         <div className="form-group mb-3">
-                            <label htmlFor="forName" className="form-label">Full Name:</label>
+                            <label htmlFor="forName" className="form-label">Nombre completo:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="forName"
-                                placeholder="Daniel Novas"
+                                placeholder="Jhon Doe"
                                 name="fullname"
                                 onChange={handleChange}
                                 value={user.fullname}
@@ -129,9 +143,9 @@ export const Register = () => {
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="forBirthdate">Birthdate:</label>
-                            <input 
-                                type="date" 
+                            <label htmlFor="forBirthdate">Fecha de nacimiento:</label>
+                            <input
+                                type="date"
                                 className="form-control"
                                 id="forBirthdate"
                                 name="birthdate"
@@ -140,23 +154,23 @@ export const Register = () => {
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="forGender">Gender:</label>
+                            <label htmlFor="forGender">Genero:</label>
                             <select
-                                onChange={handleChange} 
-                                className="form-control" 
-                                name="gender" 
+                                onChange={handleChange}
+                                className="form-control"
+                                name="gender"
                                 id="forGender"
                                 value={user.gender}
                             >
-                                <option value="">Choose...</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
+                                <option value="">Elije...</option>
+                                <option value="Male">Masculino</option>
+                                <option value="Female">Femenino</option>
+                                <option value="Other">Otro</option>
                             </select>
                         </div>
                         <div className="form-group mb-3">
                             <label htmlFor="forAvatar">Avatar</label>
-                            <input 
+                            <input
                                 type="file"
                                 className="form-control"
                                 id="forAvatar"
@@ -168,19 +182,19 @@ export const Register = () => {
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="forPassword">Password:</label>
+                            <label htmlFor="forPassword">Contraseñas:</label>
                             <input
                                 type="password"
                                 className="form-control"
                                 id="forPassword"
-                                placeholder="Password"
+                                placeholder="contraseñas"
                                 name="password"
                                 onChange={handleChange}
                                 value={user.password}
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label htmlFor="forConfirmPassword">Confirm password:</label>
+                            <label htmlFor="forConfirmPassword">Confirmar contraseñas:</label>
                             <input
                                 type="password"
                                 className="form-control"
@@ -194,9 +208,10 @@ export const Register = () => {
                                 error.confirm && <div className="text-danger mt-2">{error.confirm}</div>
                             }
                         </div>
-                        <button className="btn btn-outline-primary col-12">Register</button>
+                        <button className="btn btn-outline-primary col-12">Registrar</button>
                     </form>
                 </div>
+
             </div>
         </div>
     )
