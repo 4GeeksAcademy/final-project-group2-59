@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/img/logo.png"
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-light ">
@@ -20,6 +22,9 @@ export const Navbar = () => {
 					</Link>
 					<Link to="/demo" className="nav-text">
 						Favoritos
+					</Link>
+					<Link to="/demo" className="nav-person">
+						<i class="bi bi-person-circle"></i>
 					</Link>
 				</div>
 			</div>

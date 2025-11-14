@@ -32,9 +32,10 @@
 }
 
 .card-donations {
-  max-width: 500px;
-  min-width: 300px;
+  width: 100%;
+  width: 450px;
 }
+
 .card-title {
   color: #376c73;
   font-size: 39px;
@@ -68,6 +69,13 @@
   margin-left: 40px;
   font-family: "Pathway Gothic One", sans-serif;
   font-size: 19px;
+}
+.nav-person {
+  color: white;
+  text-decoration: none;
+  margin-left: 40px;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 30px;
 }
 
 .logo-text {
@@ -104,13 +112,10 @@
 
 .btn-donations:hover {
   background-color: #cf6e37;
-  /* un poco más oscuro */
   transform: scale(1.02);
-  /* leve agrandamiento al pasar el mouse */
   color: white;
 }
 
 .btn-donations:active {
   transform: scale(0.98);
-  /* efecto de clic */
 }

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import "../../front/index.css";
+import "../../front/donations.css";
 import backUrl from "../assets/img/Donations_backgrounf.png";
 
 export const Donations = () => {
@@ -26,7 +26,6 @@ export const Donations = () => {
             <img src={backUrl} className="donations-bg-img" />
             <div
                 className="card card-donations bg-white p-4 rounded shadow me-4 me-md-5"
-                style={{ width: "100%", maxWidth: "450px" }}
             >
                 <div className="card-body">
                     <h5 className="card-title text-center mb-3">Donar</h5>
