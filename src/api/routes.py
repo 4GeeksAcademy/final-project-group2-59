@@ -9,6 +9,7 @@ from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import cloudinary.uploader as uploader
+from datetime import datetime, timezone
 
 api = Blueprint('api', __name__)
 
@@ -49,6 +50,8 @@ def register():
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
     
+    birthdate = datetime.strptime(birthdate, "%m-%d-%Y").date()
+    
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
 
@@ -66,6 +69,7 @@ def register():
         avatar = avatar,
         is_active = True, 
         password = password,
+        role = User.role.USER,
         salt=salt
     )
 
