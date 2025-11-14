@@ -1,9 +1,26 @@
-.donations {
-  background-image: url("./assets/img/backGroundDonaciones.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap");
+
+.donations-bg {
+  position: relative;
+  width: 100%;
   min-height: 100vh;
+  overflow: hidden;
+}
+
+.donations-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.card-donations {
+  position: relative;
+  z-index: 10;
 }
 
 @media (min-width: 768px) {
@@ -13,17 +30,87 @@
     align-items: center;
   }
 }
+
 .card-donations {
   max-width: 500px;
   min-width: 300px;
 }
+.card-title {
+  color: #376c73;
+  font-size: 39px;
+}
+
 .texto-hero {
   color: #fff;
   text-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
   max-width: 550px;
 }
+
 .texto-hero h1,
 .texto-hero p,
 .texto-hero h2 {
   margin-bottom: 12px;
+}
+
+.navbar {
+  background-color: transparent !important;
+  box-shadow: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 10px !important;
+}
+.nav-text {
+  color: white;
+  text-decoration: none;
+  margin-left: 40px;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 19px;
+}
+
+.logo-text {
+  color: #376c73;
+  font-family: "Baloo Chettan 2", cursive;
+  font-size: 29px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+.logo-icon {
+  height: 60px;
+  width: auto;
+  margin-right: 6px;
+}
+
+.form-control {
+  background-color: rgb(206, 206, 206);
+}
+
+.btn-donations {
+  background-color: #ff8a3d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 3px 8px rgba(255, 138, 61, 0.4);
+}
+
+.btn-donations:hover {
+  background-color: #cf6e37;
+  /* un poco más oscuro */
+  transform: scale(1.02);
+  /* leve agrandamiento al pasar el mouse */
+  color: white;
+}
+
+.btn-donations:active {
+  transform: scale(0.98);
+  /* efecto de clic */
 }
