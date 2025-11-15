@@ -6,7 +6,7 @@ body {
 }
 
 /* Blob superior izquierdo */
-body::before {
+/* body::before {
   content: "";
   position: fixed;
   width: 100%;
@@ -16,10 +16,10 @@ body::before {
   z-index: -1;
   top: 0;
   left: 0;
-}
+} */
 
 /* Blob inferior derecho */
-body::after {
+/* body::after {
   content: "";
   position: fixed;
   width: 100%;
@@ -29,7 +29,7 @@ body::after {
   z-index: -1;
   top: 0;
   left: 0;
-}
+} */
 
 .container {
   position: relative;

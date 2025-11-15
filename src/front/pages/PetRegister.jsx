@@ -1,14 +1,77 @@
 import React from "react";
-import styles from "../petRegister.css"
+import "../styles/pages/petRegister.css"
+import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner"
+
+const url = import.meta.env.VITE_BACKEND_URL
+
+const initialPet = {
+    petname: "",
+    species: "",
+    breed: "",
+    sex: "",
+    birthdate: "",
+    image: null,
+    description: ""
+};
 
 export const PetRegister = () => {
+
+    const navigate = useNavigate();
+    const [pet, setPet] = React.useState(initialPet);
+    const fileInputRef = React.useRef(null);
+
+    const handleChange = ({ target }) => {
+        setPet({
+            ...pet,
+            [target.name]: target.value
+        });
+    };
+
+    const handleFileChange = ({ target }) => {
+        const file = target.files[0];
+
+        setPet({
+            ...pet,
+            image: file
+        });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+
+        formData.append("petname", pet.petname);
+        formData.append("species", pet.species);
+        formData.append("breed", pet.breed);
+        formData.append("sex", pet.sex);
+        formData.append("birthdate", pet.birthdate);
+        formData.append("image", pet.image);
+        formData.append("description", pet.description);
+
+        try {
+            const response = await fetch(`${url}/pets`, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                setPet(initialPet);
+                fileInputRef.current.value = null;
+                navigate("/pets");
+            }
+        } catch (error) {
+            toast.error("Error inesperado, intente de nuevo más tarde.");
+        }
+    };
+
     return (
         <>
             <div className="container-fluid justify-content-center mt-5 mb-5 p-5">
                 <div className="row mt-5">
                     <div className="col-8 bg-white p-5 rounded-5">
                         <h1 className="text-center form-title">Registra una Nueva Mascota</h1>
-                        <form>
+                        <form onSubmit={handleSubmit} >
                             <div className="row">
                                 <div className="col-6">
                                     <div className="form-group mb-3">
@@ -19,11 +82,15 @@ export const PetRegister = () => {
                                             placeholder="Firulais"
                                             id="forPetName"
                                             name="petname"
+                                            onChange={handleChange}
+                                            value={pet.petname}
                                         />
                                     </div>
                                     <div className="form-group mb-3">
                                         <label htmlFor="forSpecies" className="form-label">Especie</label>
                                         <select
+                                            onChange={handleChange}
+                                            value={pet.species}
                                             className="form-control"
                                             name="species"
                                             id="forSpecies"
@@ -42,6 +109,8 @@ export const PetRegister = () => {
                                             placeholder="Mestizo"
                                             id="forBreed"
                                             name="breed"
+                                            onChange={handleChange}
+                                            value={pet.breed}
                                         />
                                     </div>
 
@@ -53,6 +122,8 @@ export const PetRegister = () => {
                                             className="form-control"
                                             name="sex"
                                             id="forSex"
+                                            onChange={handleChange}
+                                            value={pet.sex}
                                         >
                                             <option value="">Elige...</option>
                                             <option value="Male">Macho</option>
@@ -66,6 +137,8 @@ export const PetRegister = () => {
                                             className="form-control"
                                             id="forBirthdate"
                                             name="birthdate"
+                                            onChange={handleChange}
+                                            value={pet.birthdate}
                                         />
                                     </div>
                                     <div className="form-group mb-3">
@@ -75,6 +148,8 @@ export const PetRegister = () => {
                                             className="form-control"
                                             id="forImage"
                                             name="image"
+                                            onChange={handleChange}
+                                            value={pet.image}
                                         />
                                     </div>
                                 </div>
@@ -84,6 +159,8 @@ export const PetRegister = () => {
                                         className="form-control"
                                         id="description"
                                         name="description"
+                                        onChange={handleChange}
+                                        value={pet.description}
                                         rows="3"
                                     ></textarea>
                                 </div>
@@ -91,7 +168,7 @@ export const PetRegister = () => {
                         </form>
                     </div>
                     <div className="col-4 justify-content-center align-item-center border border-danger d-flex">
-                        <div className="d-flex flex-column aling-items-end" style={{maxWidth: "350px"}}>
+                        <div className="d-flex flex-column aling-items-end" style={{ maxWidth: "350px" }}>
                             <div className="">
                                 <img src="https://www.nicepng.com/png/full/1-15541_cat-png-cat-png.png" alt="Preview" className="img-fluid mb-3" />
                             </div>
