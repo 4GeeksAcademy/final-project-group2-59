@@ -2,6 +2,7 @@ import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Toaster, toast } from "sonner"
 import "../styles/pages/./Register.css"
+import { Link } from "react-router-dom"
 
 const initialUser = {
     fullname: "",
@@ -97,17 +98,18 @@ export const Register = () => {
     return (
         <div className="container vh-100 d-flex flex-column mt-5">
             <Toaster position="top-center" />
-            <div className="container-blue container-fluid position-relative mt-4 rounded">
-                <div className="position-absolute top-0 start-0 h-100 w-50 d-none d-md-flex justify-content-center text-white">
-                    <div className="text-center">
+            <div className="d-flex">
+                <div className="">
+                    <div className="">
 
-                        {/* Texto y botón */}
-                        <div className="mt-5 pt-5">
-                            <h4 className="mb-3">¿Ya tienes una cuenta?</h4>
-                            <p className="mb-4">
-                                Inicia Sesión para que seas parte de nuestra comunidad
+                        <div className="mt-5 pt-5 d-none d-lg-block">
+                            <h1 className="mb-3 ms-5">¿Ya tienes una cuenta?</h1>
+                            <p className="mb-4 ms-5 fs-5">
+                                Inicia Sesión para que seas parte de nuestra <br /> comunidad.
                             </p>
-
+                            <div className="ms-5">
+                                <Link className="boton-iniciar-sesion btn btn-outline-light rounded-5 btn-lg border-3">Iniciar Sesion</Link>
+                            </div>
                         </div>
                     </div>
                 </div>

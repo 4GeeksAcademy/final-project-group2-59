@@ -17,3 +17,7 @@ body {
     height: 70vh;
     background-color: #376c73;
 }
+
+.boton-iniciar-sesion {
+  width: 20rem;
+}

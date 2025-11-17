@@ -32,14 +32,14 @@ def register():
     data_form = request.form
     data_files = request.files
 
-    fullname = data_form.get("fullname")
+    full_name = data_form.get("full_name")
     email = data_form.get("email")
     password = data_form.get("password")
     birthdate = data_form.get("birthdate")
     gender = data_form.get("gender")
     avatar_db = data_files.get("avatar")
     
-    if not fullname or not email or not birthdate or not gender or not password:
+    if not full_name or not email or not birthdate or not gender or not password:
         return jsonify({"message": "Please put all the information to register."}), 400
 
     if not valid_email(email):
@@ -63,7 +63,7 @@ def register():
 
     new_user = User(
         email = email,
-        fullname = fullname,
+        full_name = full_name,
         birthdate = birthdate,
         gender = gender,
         avatar = avatar,
