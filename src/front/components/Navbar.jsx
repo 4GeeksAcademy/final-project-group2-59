@@ -11,7 +11,7 @@ export const Navbar = () => {
 					<span className="navbar-brand logo-text mb-0 h1">Patitas Felices</span >
 				</Link>
 				<div className="ml-auto">
-					<Link to="/demo" className="nav-text">
+					<Link to="/" className="nav-text">
 						Inicio
 					</Link>
 					<Link to="/demo" className="nav-text">
