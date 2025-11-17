@@ -5,7 +5,7 @@ import "../styles/pages/./Register.css"
 import { Link } from "react-router-dom"
 
 const initialUser = {
-    fullname: "",
+    full_name: "",
     email: "",
     birthdate: "",
     gender: "",
@@ -69,7 +69,7 @@ export const Register = () => {
         }
 
         const formData = new FormData()
-        formData.append("fullname", user.fullname)
+        formData.append("full_name", user.full_name)
         formData.append("email", user.email)
         formData.append("birthdate", user.birthdate)
         formData.append("gender", user.gender)
@@ -129,7 +129,7 @@ export const Register = () => {
                                 placeholder="Jhon Doe"
                                 name="fullname"
                                 onChange={handleChange}
-                                value={user.fullname}
+                                value={user.full_name}
                             />
                         </div>
                         <div className="form-group mb-3">
@@ -165,9 +165,9 @@ export const Register = () => {
                                 value={user.gender}
                             >
                                 <option value="">Elije...</option>
-                                <option value="Male">Masculino</option>
-                                <option value="Female">Femenino</option>
-                                <option value="Other">Otro</option>
+                                <option value="MASCULINO">Masculino</option>
+                                <option value="FEMENINO">Femenino</option>
+                                <option value="OTRO">Otro</option>
                             </select>
                         </div>
                         <div className="form-group mb-3">
