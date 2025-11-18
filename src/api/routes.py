@@ -50,8 +50,6 @@ def register():
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
     
-    birthdate = datetime.strptime(birthdate, "%Y-%m-%d").date()
-    
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
 
@@ -67,9 +65,9 @@ def register():
         birthdate = birthdate,
         gender = gender,
         avatar = avatar,
-        is_active = True, 
         password = password,
-        role = User.role.USER,
+        role = "USER",
+        status = "ACTIVE",
         salt=salt
     )
 
