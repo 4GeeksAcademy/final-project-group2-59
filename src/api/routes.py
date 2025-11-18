@@ -26,9 +26,15 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
+@api.route('/health-check', methods=['GET'])
+def health_check():
+    return jsonify({"status": "OK"}), 200
+
+
 @api.route('/register', methods=["POST"])
 def register():
-    
+
     data_form = request.form
     data_files = request.files
 
@@ -44,7 +50,7 @@ def register():
 
     if not valid_email(email):
         return jsonify({"message": "The email format is not valid. Ex: example@gmail.com"}), 400
-    
+
     user_exist = User.query.filter_by(email=email).first()
 
     if user_exist:
@@ -81,3 +87,56 @@ def register():
         return jsonify({"message": "Error creating user", "Error": f"{error.args}"}), 500
 
     return jsonify("Done")
+
+
+@api.route('/pets', methods=['GET'])
+def get_pets():
+    pets = Pet.query.all()
+    pets_list = [pet.serialize() for pet in pets]
+    return jsonify(pets_list), 200
+
+
+@api.route('/petregister', methods=["POST"])
+def pet_register():
+    try:
+        data_form = request.form
+        data_files = request.files
+
+        data = {
+            "name": data_form.get("petname"),
+            "birthdate": data_form.get("birthdate"),
+            "species": data_form.get("species"),
+            "breed": data_form.get("breed"),
+            "sex": data_form.get("sex"),
+            "description": data_form.get("description"),
+            "image_db": data_files.get("image")
+        }
+
+        print(data)
+
+        image=""
+
+        if data.get("image_db") is not None:
+            image = uploader.upload(data.get("image_db"))
+            image = image["secure_url"]
+
+        new_pet = Pet(
+            name=data["name"],
+            birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d").date(),
+            species=data["species"],
+            breed=data["breed"],
+            sex=data["sex"],
+            status="LOOKING_FOR_FAMILY",
+            description=data["description"],
+            image=image,
+        )
+
+        
+        db.session.add(new_pet)
+
+        db.session.commit()
+        return jsonify({"message": "Pet created successfully"}), 201
+    except Exception as error:
+        print(error.args)
+        db.session.rollback()
+        return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
