@@ -74,3 +74,11 @@ body {
   box-shadow: none ;
   outline: none ;
 }
+
+.boton-registro{
+  background-color: #e78951;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color:#e6e6e6;
+}

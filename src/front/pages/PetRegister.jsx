@@ -28,9 +28,8 @@ export const PetRegister = () => {
         });
     };
 
-    const handleFileChange = ({ target }) => {
-        const file = target.files[0];
-
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
         setPet({
             ...pet,
             image: file
@@ -41,16 +40,21 @@ export const PetRegister = () => {
         event.preventDefault();
         const formData = new FormData();
 
+
         formData.append("petname", pet.petname);
+        console.log(pet.petname)
         formData.append("species", pet.species);
         formData.append("breed", pet.breed);
         formData.append("sex", pet.sex);
         formData.append("birthdate", pet.birthdate);
         formData.append("image", pet.image);
         formData.append("description", pet.description);
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
         try {
-            const response = await fetch(`${url}/pets`, {
+            const response = await fetch(`${url}/petregister`, {
                 method: "POST",
                 body: formData
             });
@@ -58,7 +62,10 @@ export const PetRegister = () => {
             if (response.ok) {
                 setPet(initialPet);
                 fileInputRef.current.value = null;
-                navigate("/pets");
+                setTimeout(() => {
+                    navigate("/pets");
+                }, 2000);
+                toast.success("Mascota registrada con éxito.");
             }
         } catch (error) {
             toast.error("Error inesperado, intente de nuevo más tarde.");
@@ -67,7 +74,7 @@ export const PetRegister = () => {
 
     return (
         <>
-            <div className="container-fluid justify-content-center mt-5 mb-5 p-5">
+            <div className="container-fluid justify-content-center mt-5 p-5">
                 <div className="row mt-5">
                     <div className="col-8 bg-white p-5 rounded-5">
                         <h1 className="text-center form-title">Registra una Nueva Mascota</h1>
@@ -96,9 +103,9 @@ export const PetRegister = () => {
                                             id="forSpecies"
                                         >
                                             <option value="">Elige...</option>
-                                            <option value="Dog">Perro</option>
-                                            <option value="Cat">Gato</option>
-                                            <option value="Other">Otro</option>
+                                            <option value="DOG">Perro</option>
+                                            <option value="CAT">Gato</option>
+                                            <option value="OTHER">Otro</option>
                                         </select>
                                     </div>
                                     <div className="form-group mb-3">
@@ -126,8 +133,8 @@ export const PetRegister = () => {
                                             value={pet.sex}
                                         >
                                             <option value="">Elige...</option>
-                                            <option value="Male">Macho</option>
-                                            <option value="Female">Hembra</option>
+                                            <option value="MALE">Macho</option>
+                                            <option value="FEMALE">Hembra</option>
                                         </select>
                                     </div>
                                     <div className="form-group mb-3">
@@ -148,8 +155,9 @@ export const PetRegister = () => {
                                             className="form-control"
                                             id="forImage"
                                             name="image"
-                                            onChange={handleChange}
-                                            value={pet.image}
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            ref={fileInputRef}
                                         />
                                     </div>
                                 </div>
@@ -165,15 +173,13 @@ export const PetRegister = () => {
                                     ></textarea>
                                 </div>
                             </div>
+                            <button type="submit" className="boton-registro btn w-100 mt-3 rounded-5">Registrar Mascota</button>
                         </form>
                     </div>
-                    <div className="col-4 justify-content-center align-item-center border border-danger d-flex">
+                    <div className="col-4 justify-content-center align-items-center  d-flex">
                         <div className="d-flex flex-column aling-items-end" style={{ maxWidth: "350px" }}>
                             <div className="">
                                 <img src="https://www.nicepng.com/png/full/1-15541_cat-png-cat-png.png" alt="Preview" className="img-fluid mb-3" />
-                            </div>
-                            <div className="">
-                                <button type="submit" className="btn btn-primary w-100">Registrar Mascota</button>
                             </div>
                         </div>
                     </div>
