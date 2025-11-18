@@ -38,14 +38,14 @@ def register():
     data_form = request.form
     data_files = request.files
 
-    fullname = data_form.get("fullname")
+    full_name = data_form.get("full_name")
     email = data_form.get("email")
     password = data_form.get("password")
     birthdate = data_form.get("birthdate")
     gender = data_form.get("gender")
     avatar_db = data_files.get("avatar")
-
-    if not fullname or not email or not birthdate or not gender or not password:
+    
+    if not full_name or not email or not birthdate or not gender or not password:
         return jsonify({"message": "Please put all the information to register."}), 400
 
     if not valid_email(email):
@@ -55,9 +55,7 @@ def register():
 
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
-
-    birthdate = datetime.strptime(birthdate, "%m-%d-%Y").date()
-
+    
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
 
@@ -68,14 +66,14 @@ def register():
         avatar = avatar["secure_url"]
 
     new_user = User(
-        email=email,
-        fullname=fullname,
-        birthdate=birthdate,
-        gender=gender,
-        avatar=avatar,
-        is_active=True,
-        password=password,
-        role=User.role.USER,
+        email = email,
+        full_name = full_name,
+        birthdate = birthdate,
+        gender = gender,
+        avatar = avatar,
+        password = password,
+        role = "USER",
+        status = "ACTIVE",
         salt=salt
     )
 
