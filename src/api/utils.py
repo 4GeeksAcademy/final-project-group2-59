@@ -1,4 +1,5 @@
 from flask import jsonify, url_for
+import re
 
 class APIException(Exception):
     status_code = 400
@@ -39,3 +40,12 @@ def generate_sitemap(app):
         <p>Start working on your project by following the <a href="https://start.4geeksacademy.com/starters/full-stack" target="_blank">Quick Start</a></p>
         <p>Remember to specify a real endpoint path like: </p>
         <ul style="text-align: left;">"""+links_html+"</ul></div>"
+
+def valid_email(email):
+
+    patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+    if re.fullmatch(patron, email):
+        return True
+    else:
+        return False
