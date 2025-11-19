@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { Toaster, toast } from "sonner"
-// import "../styles/pages/./Register.css"
+import "../styles/pages/./Register.css"
 import { Link } from "react-router-dom"
 
 const initialUser = {
