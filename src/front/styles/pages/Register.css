@@ -1,8 +1,16 @@
 
-
-.container-blue {
-    height: 70vh;
+.container-blue-left {
     background-color: #376c73;
+    height: 43rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+.container-blue-right {
+  background-color: #376c73;
+  width: 1rem;
+  height: 43rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .boton-iniciar-sesion {

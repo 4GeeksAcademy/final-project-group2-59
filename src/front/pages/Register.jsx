@@ -96,27 +96,21 @@ export const Register = () => {
     }
 
     return (
-        <div className="container vh-100 d-flex flex-column mt-5">
+        <div>
             <Toaster position="top-center" />
-            <div className="d-flex">
-                <div className="">
-                    <div className="">
-
-                        <div className="mt-5 pt-5 d-none d-lg-block">
-                            <h1 className="mb-3 ms-5">¿Ya tienes una cuenta?</h1>
-                            <p className="mb-4 ms-5 fs-5">
-                                Inicia Sesión para que seas parte de nuestra <br /> comunidad.
-                            </p>
-                            <div className="ms-5">
-                                <Link className="boton-iniciar-sesion btn btn-outline-light rounded-5 btn-lg border-3">Iniciar Sesion</Link>
-                            </div>
-                        </div>
+            <div className="d-flex justify-content-center align-items-center">
+                <div className="container-blue-left p-5 d-none d-lg-block">
+                    <h1 className="mb-5 ms-5 mt-5 text-light">¿Ya tienes una cuenta?</h1>
+                    <p className="mb-4 ms-5 fs-5 text-light fw-light">
+                        Inicia Sesión para que seas parte de nuestra <br /> comunidad.
+                    </p>
+                    <div className="ms-5 mt-5">
+                        <Link className="boton-iniciar-sesion btn btn-outline-light rounded-5 btn-lg border-3">Iniciar Sesion</Link>
                     </div>
                 </div>
-
-                <div className="position-absolute top-50 end-0 translate-middle">
+                <div>
                     <form
-                        className="p-5 bg-white"
+                        className="p-5 bg-white rounded-5"
                         onSubmit={handleSubmit}
                     >
                         <h1 className="text-center mb-4">Registrar</h1>
@@ -212,6 +206,9 @@ export const Register = () => {
                         </div>
                         <button className="btn btn-outline-primary col-12">Registrar</button>
                     </form>
+                </div>
+                <div className="container-blue-right">
+                    
                 </div>
 
             </div>
