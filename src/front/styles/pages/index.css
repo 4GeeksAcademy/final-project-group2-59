@@ -14,10 +14,10 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: var(--color-fondo);
+  background-color: black;
   color: var(--color-texto);
 
-  background-image: url("fondoc.jpeg");
+  /* background-image: url("fondoc.jpeg"); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
