@@ -1,17 +1,4 @@
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #fff8f0;
-  background-image:
-    radial-gradient(circle at 10% 20%, #f4c095 20%, #f4c095 20.1%, transparent 20.2%),
-    radial-gradient(circle at 80% 10%, #a8d5ba 25%, #a8d5ba 25.1%, transparent 25.2%),
-    radial-gradient(circle at 30% 80%, #f7e9c4 22%, #f7e9c4 22.1%, transparent 22.2%),
-    radial-gradient(circle at 70% 70%, #f9a26c 18%, #f9a26c 18.1%, transparent 18.2%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-}
+
 
 .container-blue {
     height: 70vh;
