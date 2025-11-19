@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/img/logo.png"
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/components/navbar.css";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-light ">
+		<nav className="navbar">
 			<div className="container">
 				<Link to="/" className="d-flex align-items-center logo-text">
 					<img src={Logo} className="logo-icon" />

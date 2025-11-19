@@ -1,0 +1,25 @@
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 10px !important;
+  opacity: 1 !important;
+}
+.nav-text {
+  color: #333;
+  text-decoration: none;
+  margin-left: 40px;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 19px;
+}
+.nav-person {
+  color: #333;
+  text-decoration: none;
+  margin-left: 40px;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 30px;
+}
