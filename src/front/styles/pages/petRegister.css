@@ -1,19 +1,11 @@
 
 
-.container {
-  position: relative;
-  z-index: 1;
-}
 
 
 
 /* Estilos del formulario */
 
-.custom-gap {
-  gap: 2rem;
-}
-
-.form-title {
+.pet-register_form-title {
   font-family: "Arimo", sans-serif;
   font-weight: bold;
   font-size: 3rem;
