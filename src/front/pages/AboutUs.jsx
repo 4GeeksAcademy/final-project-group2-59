@@ -1,6 +1,5 @@
 import React from "react";
-import "../styles/pages/abou"
-
+import "../styles/pages/about.css"
 
 export const AboutUs = () => {
     return (
@@ -9,7 +8,7 @@ export const AboutUs = () => {
 
                 <div className="about-image">
                     <img
-                        src="/img/perrito-about.jpg"
+                        src="/img/perritos-about.jpg"
                         alt="Refugio Patitas Felices"
                     />
                 </div>
