@@ -96,10 +96,10 @@ export const Register = () => {
     }
 
     return (
-        <div>
+        <div className="register-body ">
             <Toaster position="top-center" />
-            <div className="d-flex justify-content-center align-items-center">
-                <div className="container-blue-left p-5 d-none d-lg-block">
+            <div className="d-flex justify-content-center align-items-center mt-5">
+                <div className="container-blue-left p-5 d-none d-sm-none d-md-block">
                     <h1 className="mb-5 ms-5 mt-5 text-light">¿Ya tienes una cuenta?</h1>
                     <p className="mb-4 ms-5 fs-5 text-light fw-light">
                         Inicia Sesión para que seas parte de nuestra <br /> comunidad.
@@ -108,9 +108,18 @@ export const Register = () => {
                         <Link className="boton-iniciar-sesion btn btn-outline-light rounded-5 btn-lg border-3">Iniciar Sesion</Link>
                     </div>
                 </div>
+
                 <div>
+                    <div className="container-blue-sm p-5 d-block d-sm-none">
+                    <h1 className="text-light">¿Ya tienes una cuenta?</h1>
+                    <p className="fs-5 text-light fw-light">
+                        Inicia Sesión para que seas parte de nuestra <br /> comunidad.
+                    </p>
+                    <div className="mb-3">
+                        <Link className="boton-iniciar-sesion btn btn-outline-light rounded-5 btn-lg border-3">Iniciar Sesion</Link>
+                    </div>
                     <form
-                        className="p-5 bg-white rounded-5"
+                        className="p-5 bg-white rounded-5 m-1 d-block d-sm-none"
                         onSubmit={handleSubmit}
                     >
                         <h1 className="text-center mb-4">Registrar</h1>
@@ -207,10 +216,106 @@ export const Register = () => {
                         <button className="btn btn-outline-primary col-12">Registrar</button>
                     </form>
                 </div>
-                <div className="container-blue-right">
-                    
+                    <form
+                        className="p-5 bg-white rounded-5 d-none d-sm-none d-md-block"
+                        onSubmit={handleSubmit}
+                    >
+                        <h1 className="text-center mb-4">Registrar</h1>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forName" className="form-label">Nombre completo:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="forName"
+                                placeholder="Jhon Doe"
+                                name="fullname"
+                                onChange={handleChange}
+                                value={user.full_name}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forEmail">Email:</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="forEmail"
+                                placeholder="example@email.com"
+                                name="email"
+                                onChange={handleChange}
+                                value={user.email}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forBirthdate">Fecha de nacimiento:</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="forBirthdate"
+                                name="birthdate"
+                                onChange={handleChange}
+                                value={user.birthdate}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forGender">Genero:</label>
+                            <select
+                                onChange={handleChange}
+                                className="form-control"
+                                name="gender"
+                                id="forGender"
+                                value={user.gender}
+                            >
+                                <option value="">Elije...</option>
+                                <option value="MASCULINO">Masculino</option>
+                                <option value="FEMENINO">Femenino</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forAvatar">Avatar</label>
+                            <input
+                                type="file"
+                                className="form-control"
+                                id="forAvatar"
+                                placeholder="Avatar"
+                                name="avatar"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forPassword">Contraseñas:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="forPassword"
+                                placeholder="contraseñas"
+                                name="password"
+                                onChange={handleChange}
+                                value={user.password}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="forConfirmPassword">Confirmar contraseñas:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="forConfirmPassword"
+                                placeholder="Confirm password"
+                                name="password"
+                                onChange={handleConfirmChange}
+                                value={confirmPassword}
+                            />
+                            {
+                                error.confirm && <div className="text-danger mt-2">{error.confirm}</div>
+                            }
+                        </div>
+                        <button className="btn btn-outline-primary col-12">Registrar</button>
+                    </form>
                 </div>
-
+                <div className="container-blue-right d-none d-sm-none d-md-block"></div>
+                
             </div>
         </div>
     )
