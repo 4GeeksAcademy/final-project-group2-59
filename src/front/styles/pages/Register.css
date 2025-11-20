@@ -12,6 +12,9 @@
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
+.container-blue-sm {
+  background-color: #376c73;
+}
 
 .boton-iniciar-sesion {
   width: 20rem;
