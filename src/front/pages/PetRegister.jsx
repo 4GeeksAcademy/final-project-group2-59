@@ -54,7 +54,7 @@ export const PetRegister = () => {
         }
 
         try {
-            const response = await fetch(`${url}/petregister`, {
+            const response = await fetch(`${url}/api/petregister`, {
                 method: "POST",
                 body: formData
             });
@@ -74,10 +74,11 @@ export const PetRegister = () => {
 
     return (
         <>
+            <Toaster position="top-center" />
             <div className="container-fluid justify-content-center mt-5 p-5">
                 <div className="row mt-5">
                     <div className="col-8 bg-white p-5 rounded-5">
-                        <h1 className="text-center form-title">Registra una Nueva Mascota</h1>
+                        <h1 className="text-center pet-register_form-title">Registra una Nueva Mascota</h1>
                         <form onSubmit={handleSubmit} >
                             <div className="row">
                                 <div className="col-6">
