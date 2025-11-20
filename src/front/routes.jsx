@@ -11,6 +11,8 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { Donations } from "./pages/Donations"
 import { Register } from "./pages/Register";
+import Success from "./pages/Success";
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +31,7 @@ export const router = createBrowserRouter(
       <Route path="/demo" element={<Demo />} />
       <Route path="/donations" element={<Donations />} />
       <Route path="/register" element={<Register />} />
-
+      <Route path="/success" element={<Success />} />
     </Route>
   )
 
