@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/pages/about.css"
+import perroimg from "./img/perritos-about.jpg";
 
 export const AboutUs = () => {
     return (
@@ -8,7 +9,7 @@ export const AboutUs = () => {
 
                 <div className="about-image">
                     <img
-                        src="/img/perritos-about.jpg"
+                        src={perroimg}
                         alt="Refugio Patitas Felices"
                     />
                 </div>
