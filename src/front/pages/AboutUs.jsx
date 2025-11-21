@@ -1,10 +1,11 @@
 import React from "react";
-import "../styles/pages/about.css"
+import "../styles/pages/about.css";
 import perroimg from "./img/perritos-about.jpg";
 
 export const AboutUs = () => {
     return (
-        <section className="about-section">
+        <section className="about-section fondo-mascotas">
+
             <div className="about-container">
 
                 <div className="about-image">

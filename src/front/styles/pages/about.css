@@ -6,8 +6,19 @@
   --color-texto: #222;
 }
 
+/* Fondo nuevo con degradado */
+.fondo-mascotas {
+  min-height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--color-fondo) 0%,
+    #fdeccf 40%,
+    #f7d4b4 100%
+  );
+}
+
+
 .about-section {
-  background-color: var(--color-fondo);
   padding: 80px 20px;
   display: flex;
   justify-content: center;
