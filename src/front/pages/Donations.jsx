@@ -58,7 +58,6 @@ export const Donations = () => {
                 return;
             }
 
-            // Redirigimos a PayPal
             window.location.href = approveLink.href;
 
         } catch (error) {
