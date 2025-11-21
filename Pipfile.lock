@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ffbfb32d0afa5e4bcaba5c2d08c81381a97abd90f22284d2b76647365df5dc50"
+            "sha256": "d5306e3c73e278615b348857ad61a3f456014265f2af9ce5f5538221f1a1e1d5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -18,11 +18,11 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:8a289f6778262df31571d29cca4c7fbacd2f0f582ea0816f4c399b6da7528486",
-                "sha256:cbc2386e60f89608bb63f30d2d6cc66c7aaed1fe105bd862828600e5ad167023"
+                "sha256:bbe9751705c5e0f14877f02d46c53d10885e377e3d90eda810a016f9baa19e8e",
+                "sha256:f483dd1fe93f6c5d49217055e4d15b905b425b6af906746abb35b69c1996c4e6"
             ],
             "markers": "python_version >= '3.10'",
-            "version": "==1.17.1"
+            "version": "==1.17.2"
         },
         "blinker": {
             "hashes": [
@@ -42,11 +42,11 @@
         },
         "click": {
             "hashes": [
-                "sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc",
-                "sha256:e7b8232224eba16f4ebe410c25ced9f7875cb5f3263ffc93cc3e8da705e229c4"
+                "sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a",
+                "sha256:981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6"
             ],
             "markers": "python_version >= '3.10'",
-            "version": "==8.3.0"
+            "version": "==8.3.1"
         },
         "cloudinary": {
             "hashes": [
@@ -85,12 +85,12 @@
         },
         "flask-jwt-extended": {
             "hashes": [
-                "sha256:63a28fc9731bcc6c4b8815b6f954b5904caa534fc2ae9b93b1d3ef12930dca95",
-                "sha256:9215d05a9413d3855764bcd67035e75819d23af2fafb6b55197eb5a3313fdfb2"
+                "sha256:52f35bf0985354d7fb7b876e2eb0e0b141aaff865a22ff6cc33d9a18aa987978",
+                "sha256:8085d6757505b6f3291a2638c84d207e8f0ad0de662d1f46aa2f77e658a0c976"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7' and python_version < '4'",
-            "version": "==4.6.0"
+            "markers": "python_version >= '3.9' and python_version < '4'",
+            "version": "==4.7.1"
         },
         "flask-migrate": {
             "hashes": [

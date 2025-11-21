@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
@@ -23,6 +24,9 @@ app.url_map.strict_slashes = False
 
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+# JWT Configuration
+app.config["JWT_SECRET_KEY"] = os.getenv("FLASK_APP_KEY")
+jwt = JWTManager(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -75,5 +79,5 @@ def serve_any_other_file(path):
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 3001))
+    PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=True)

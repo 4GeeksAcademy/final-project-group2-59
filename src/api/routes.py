@@ -7,10 +7,11 @@ from api.utils import generate_sitemap, APIException, valid_email, get_paypal_to
 from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import os
 import cloudinary.uploader as uploader
-from datetime import datetime, timezone
 import requests
+from datetime import datetime, timezone, timedelta
 
 api = Blueprint('api', __name__)
 
@@ -28,20 +29,25 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
+@api.route('/health-check', methods=['GET'])
+def health_check():
+    return jsonify({"status": "OK"}), 200
+
+
 @api.route('/register', methods=["POST"])
 def register():
 
     data_form = request.form
     data_files = request.files
 
-    fullname = data_form.get("fullname")
+    full_name = data_form.get("full_name")
     email = data_form.get("email")
     password = data_form.get("password")
     birthdate = data_form.get("birthdate")
     gender = data_form.get("gender")
     avatar_db = data_files.get("avatar")
 
-    if not fullname or not email or not birthdate or not gender or not password:
+    if not full_name or not email or not birthdate or not gender or not password:
         return jsonify({"message": "Please put all the information to register."}), 400
 
     if not valid_email(email):
@@ -65,13 +71,13 @@ def register():
 
     new_user = User(
         email=email,
-        fullname=fullname,
+        full_name=full_name,
         birthdate=birthdate,
         gender=gender,
         avatar=avatar,
-        is_active=True,
         password=password,
-        role=User.role.USER,
+        role="USER",
+        status="ACTIVE",
         salt=salt
     )
 
@@ -84,151 +90,102 @@ def register():
         db.session.rollback()
         return jsonify({"message": "Error creating user", "Error": f"{error.args}"}), 500
 
+    return jsonify("Done")
 
-@api.route("/donations/create-paypal-order", methods=["POST"])
-def create_paypal_order():
+
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"message": "Email and password are required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return jsonify({"message": "Invalid email or password"}), 401
+
+    password_with_salt = f"{password}{user.salt}"
+    if not check_password_hash(user.password, password_with_salt):
+        return jsonify({"message": "Invalid email or password"}), 401
+
+    if user.status.value != "Activo":
+        return jsonify({"message": "Your account is not active"}), 403
+
+    access_token = create_access_token(
+        identity=user.id,
+        expires_delta=timedelta(hours=24)
+    )
+
+    return jsonify({
+        "message": "Login successful",
+        "access_token": access_token,
+        "user": user.serialize()
+    }), 200
+
+
+@api.route('/me', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    return jsonify(user.serialize()), 200
+
+
+@api.route('/pets', methods=['GET'])
+def get_pets():
+    pets = Pet.query.all()
+    pets_list = [pet.serialize() for pet in pets]
+    return jsonify(pets_list), 200
+
+
+@api.route('/petregister', methods=["POST"])
+def pet_register():
     try:
-        data = request.get_json()
-        amount = data.get("amount")
-        if not amount:
-            return jsonify({"error": "Amount is required"}), 400
+        data_form = request.form
+        data_files = request.files
 
-        access_token = get_paypal_token()
-        if not access_token:
-            return jsonify({"error": "Failed to generate PayPal token"}), 500
-
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {access_token}"
+        data = {
+            "name": data_form.get("petname"),
+            "birthdate": data_form.get("birthdate"),
+            "species": data_form.get("species"),
+            "breed": data_form.get("breed"),
+            "sex": data_form.get("sex"),
+            "description": data_form.get("description"),
+            "image_db": data_files.get("image")
         }
 
-        body = {
-            "intent": "CAPTURE",
-            "purchase_units": [
-                {
-                    "amount": {
-                        "currency_code": "USD",
-                        "value": str(amount)
-                    }
-                }
-            ],
-            "application_context": {
-                "return_url": "https://fictional-winner-59p6pwq7694fpxgq-3000.app.github.dev/success",
-                "cancel_url": "https://example.com/cancel"
-            }
-        }
+        print(data)
 
-        paypal_response = requests.post(
-            "https://api-m.sandbox.paypal.com/v2/checkout/orders",
-            headers=headers,
-            json=body
+        image = ""
+
+        if data.get("image_db") is not None:
+            image = uploader.upload(data.get("image_db"))
+            image = image["secure_url"]
+
+        new_pet = Pet(
+            name=data["name"],
+            birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d").date(),
+            species=data["species"],
+            breed=data["breed"],
+            sex=data["sex"],
+            status="LOOKING_FOR_FAMILY",
+            description=data["description"],
+            image=image,
         )
 
-        print("PAYPAL STATUS:", paypal_response.status_code)
-        print("PAYPAL RAW:", paypal_response.text)
+        db.session.add(new_pet)
 
-        if paypal_response.status_code >= 400:
-            return jsonify({
-                "error": "PayPal API error",
-                "details": paypal_response.json()
-            }), 500
-
-        return jsonify(paypal_response.json()), 200
-
-    except Exception as e:
-        print("SERVER ERROR:", str(e))
-        return jsonify({"error": "Internal server error"}), 500
-
-
-@api.route('/donations/capture', methods=['POST'])
-def capture_from_paypal():
-    try:
-        data = request.get_json()
-        token = data.get("token")
-
-        if not token:
-            return jsonify({"error": "Token is required"}), 400
-
-        access_token = get_paypal_token()
-        if not access_token:
-            return jsonify({"error": "Failed to generate PayPal token"}), 500
-
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {access_token}"
-        }
-
-        paypal_response = requests.post(
-            f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{token}/capture",
-            headers=headers
-        )
-
-        capture_data = paypal_response.json()
-
-        if capture_data.get("status") != "COMPLETED":
-            return jsonify({"error": "Payment not completed"}), 400
-
-        payer = capture_data.get("payer", {})
-        purchase_unit = capture_data["purchase_units"][0]
-        captured_payment = purchase_unit["payments"]["captures"][0]
-
-        return jsonify({
-            "status": capture_data["status"],
-            "payer_email": payer.get("email_address"),
-            "payer_name": payer.get("name", {}).get("given_name", "anonymous"),
-            "amount": captured_payment["amount"]["value"],
-            "currency": captured_payment["amount"]["currency_code"],
-            "capture_id": captured_payment["id"]   # <-- transaction id real
-        }), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@api.route('/donations/register', methods=['POST'])
-def register_donation():
-    try:
-        data = request.get_json()
-
-        name = data.get("name")
-        email = data.get("email")
-        amount = data.get("amount")
-        transaction_number = data.get(
-            "transaction_number")
-        message = data.get("message")
-
-        if not transaction_number:
-            return jsonify({"error": "Transaction number is required"}), 400
-
-        existing = Donation.query.filter_by(
-            transaction_number=transaction_number).first()
-        if existing:
-            return jsonify(existing.serialize()), 200
-
-        new_donation = Donation(
-            name=name,
-            email=email,
-            amount=amount,
-            transaction_number=transaction_number,
-            message=message if message else None  # opcional
-        )
-
-        db.session.add(new_donation)
         db.session.commit()
-
-        return jsonify({
-            "message": "Donation saved successfully",
-            "donation": {
-                "id": new_donation.id,
-                "name": new_donation.name,
-                "email": new_donation.email,
-                "amount": new_donation.amount,
-                "transaction_number": new_donation.transaction_number,
-                "message": new_donation.message,
-                "created_at": new_donation.created_at
-            }
-        }), 201
-
-    except Exception as e:
+        return jsonify({"message": "Pet created successfully"}), 201
+    except Exception as error:
+        print(error.args)
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
