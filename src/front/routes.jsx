@@ -14,6 +14,7 @@ import { Register } from "./pages/Register";
 import { PetRegister } from "./pages/PetRegister";
 import {Login} from "./pages/Login"
 import { AboutUs } from "./pages/AboutUs";
+import { Pets } from "./pages/Pets";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ export const router = createBrowserRouter(
       <Route path="/petregister" element={<PetRegister />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<AboutUs />} />
+      <Route path="/pets" element={<Pets />} />
     </Route>
   )
 
