@@ -25,7 +25,7 @@ export const Navbar = () => {
 						Favoritos
 					</Link>
 					<Link to="/demo" className="nav-person">
-						<i class="bi bi-person-circle"></i>
+						<i className="bi bi-person-circle"></i>
 					</Link>
 				</div>
 			</div>

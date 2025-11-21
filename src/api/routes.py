@@ -3,13 +3,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation
-from api.utils import generate_sitemap, APIException, valid_email
+from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token
 from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import os
 import cloudinary.uploader as uploader
+import requests
 from datetime import datetime, timezone, timedelta
 
 api = Blueprint('api', __name__)
@@ -56,6 +57,8 @@ def register():
 
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
+
+    birthdate = datetime.strptime(birthdate, "%m-%d-%Y").date()
 
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
