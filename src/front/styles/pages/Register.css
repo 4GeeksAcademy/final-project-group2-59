@@ -1,21 +1,22 @@
-
 .container-blue-left {
-    background-color: #376c73;
-    height: 43rem;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-}
-.container-blue-right {
-  background-color: #376c73;
-  width: 1rem;
-  height: 43rem;
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-}
-.container-blue-sm {
   background-color: #376c73;
 }
 
 .boton-iniciar-sesion {
-  width: 20rem;
+  width: 25rem;
 }
+
+.register_form {
+  margin: -3rem 0rem;
+}
+
+.register-body {
+  margin-top: 7rem;
+}
+
+/* .register-animals {
+  margin: -3rem 0rem;
+  position: absolute;
+  top: -48px;
+  left: 0;
+} */
