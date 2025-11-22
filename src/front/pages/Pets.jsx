@@ -1,6 +1,7 @@
 import "../../front/styles/pages/pets.css"
 import { PetCard } from "../components/PetCard.jsx"
 import React, { useEffect, useState } from "react";
+import { Spinner } from "../components/Spinner.jsx";
 
 const url = import.meta.env.VITE_BACKEND_URL
 
@@ -27,6 +28,12 @@ export const Pets = () => {
         fetchPets();
     }, []);
 
+    if (loading) {
+        return (
+            <Spinner />
+        );
+    }
+
     return (
         <>
             <div className="d-flex justify-content-center p-5">
@@ -41,7 +48,7 @@ export const Pets = () => {
                     ) : (
                         <div className="row">
                             {pets.map((pet) => (
-                                <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={pet.id}>
+                                <div className="col-12 col-sm-12 col-md-6 col-lg-4 mb-4" key={pet.id}>
                                     <PetCard pet={pet} />
                                 </div>
                             ))}
