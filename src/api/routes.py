@@ -145,6 +145,15 @@ def get_pets():
     pets_list = [pet.serialize() for pet in pets]
     return jsonify(pets_list), 200
 
+@api.route('/pet/<int:pet_id>', methods=['GET'])
+def get_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+
+    if not pet:
+        return jsonify({"message": "Pet not found"}), 404
+
+    return jsonify(pet.serialize()), 200
+
 
 @api.route('/petregister', methods=["POST"])
 def pet_register():

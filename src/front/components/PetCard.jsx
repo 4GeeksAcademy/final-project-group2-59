@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const PetCard = ({ pet }) => {
 
@@ -48,7 +49,7 @@ export const PetCard = ({ pet }) => {
                         <h4>Edad: {calculateAge()}</h4>
                         <div className="d-flex justify-content-between mt-3 p-2">
                             <button className="btn btn-danger" type="submit"><i className="fa-regular fa-heart"></i></button>
-                            <a href="#" className="btn btn-light">Más sobre mi...</a>
+                            <Link to={`/pet/${pet.id}`} className="btn btn-light">Más sobre mi...</Link>
                         </div>
                     </div>
                 </div>

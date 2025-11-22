@@ -12,7 +12,7 @@
   box-sizing: border-box;
 }
 
-.home-page{
+.home-page {
   font-family: "Poppins", sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
@@ -117,3 +117,8 @@
   width: 800px;
   border-radius: 120px;
 }
+
+
+
+
+
