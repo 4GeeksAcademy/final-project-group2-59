@@ -8,7 +8,7 @@ const url = import.meta.env.VITE_BACKEND_URL
 export const Pets = () => {
 
     const [pets, setPets] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
         const fetchPets = async () => {
