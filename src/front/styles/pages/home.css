@@ -12,24 +12,16 @@
   box-sizing: border-box;
 }
 
-.home-page{
+.home-page {
   font-family: "Poppins", sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
 
-  background-image: url("./img/fondo.jpeg");
+  /* ruta correcta desde styles/pages/home.css hacia pages/img/fondo.jpeg */
+  background-image: url("../../img/fondo.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 3rem;
-  background-color: var(--color-fondo);
 }
 
 .logo {
@@ -41,23 +33,6 @@
 .logo img {
   width: 90px;
   height: 90px;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-nav a {
-  text-decoration: none;
-  color: var(--color-texto);
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-nav a:hover {
-  color: var(--color-secundario);
 }
 
 .actions .btn {
@@ -89,7 +64,6 @@ nav a:hover {
 }
 
 /* HERO SECTION */
-/* HERO */
 .hero {
   position: relative;
   height: 100vh;
@@ -97,8 +71,6 @@ nav a:hover {
   align-items: center;
   justify-content: space-between;
   padding: 6rem 5rem 3rem;
-  background: url("img/fondo.jpeg") no-repeat center center/cover;
-  z-index: 1;
 }
 
 .hero-text {
@@ -106,11 +78,11 @@ nav a:hover {
 }
 
 .hero-text h2 {
-  font-size: 2.8rem;
-  font-weight: 800;
-  line-height: 1.3;
-  color: black;
-  text-align: center;
+  font-size: 2.8rem !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  color: black !important;
+  text-align: center !important;
 }
 
 .buttons {
