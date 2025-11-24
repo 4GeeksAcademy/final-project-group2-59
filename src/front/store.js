@@ -4,7 +4,6 @@ export const initialStore=()=>{
     pet: null,
     user: null,
     token: localStorage.getItem('token') || null,
-    isAuthenticated: !!localStorage.getItem('token')
   }
 }
 
@@ -31,14 +30,12 @@ export default function storeReducer(store, action = {}) {
         pet: action.payload
       };
 
-      case 'LOGIN':
-        localStorage.setItem('token', action.payload.token);
-      return {
-        ...store,
-        user: action.payload.user,
-        token: action.payload.token,
-        isAuthenticated: true
-      };
+      case 'SET_TOKEN':
+        return {
+          ...store,
+          token: action.payload,
+        }
+      
 
     case 'LOGOUT':
       localStorage.removeItem('token');
