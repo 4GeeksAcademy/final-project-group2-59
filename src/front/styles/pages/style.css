@@ -12,7 +12,7 @@
   box-sizing: border-box;
 }
 
-.home-page {
+.home-page{
   font-family: "Poppins", sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
@@ -21,6 +21,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background-color: var(--color-fondo);
 }
 
 .logo {
@@ -32,6 +41,23 @@
 .logo img {
   width: 90px;
   height: 90px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--color-texto);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--color-secundario);
 }
 
 .actions .btn {
@@ -117,8 +143,3 @@
   width: 800px;
   border-radius: 120px;
 }
-
-
-
-
-
