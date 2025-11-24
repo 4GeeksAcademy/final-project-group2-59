@@ -16,6 +16,7 @@ import { Login } from "./pages/Login";
 import { AboutUs } from "./pages/AboutUs";
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
+import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
 import { Footer } from "./pages/Footer";
 
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
       <Route path="/about" element={<AboutUs />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
+      <Route path="/favorites" element={<Favorites />} />
       <Route path="/" element={<Footer />} />  {/* footer en todas las páginas */}
     </Route>
 
