@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import "../../front/styles/pages/donations.css";
-import backUrl from "../assets/img/Donations_backgrounf.png";
 
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
@@ -65,11 +64,10 @@ export const Donations = () => {
         }
     };
 
+
     return (
         <div className="donations-bg d-flex align-items-center justify-content-end">
-            <img src={backUrl} className="donations-bg-img" alt="background" />
-
-            <div className="card card-donations bg-white p-4 rounded shadow me-4 me-md-5">
+            <div className="card card-donations bg-white p-4 rounded shadow  me-md-5">
                 <div className="card-body">
                     <h5 className="card-title text-center mb-3">Donar</h5>
 

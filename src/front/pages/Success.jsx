@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DonationVoucher from "../components/DonationVoucher";
+import { Spinner } from "../components/Spinner.jsx";
+
+
+
 
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
@@ -10,7 +14,7 @@ export default function Success() {
     const token = params.get("token");
 
     const [donation, setDonation] = useState(null);
-    const [dots, setDots] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const formData = JSON.parse(sessionStorage.getItem("donationForm")) || {};
 
@@ -57,16 +61,16 @@ export default function Success() {
 
             setDonation(saved.donation);
         };
-
         process();
     }, [token]);
+
     return (
         <div className="mt-4">
             {donation ? (
                 <DonationVoucher donation={donation} />
             ) : (
                 <h3 className="text-center mt-5">
-                    Procesando pago{dots}
+                    <Spinner />
                 </h3>
             )}
         </div>

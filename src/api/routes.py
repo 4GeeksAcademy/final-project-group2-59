@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation
-from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token
+from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success
 from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -145,6 +145,7 @@ def get_pets():
     pets_list = [pet.serialize() for pet in pets]
     return jsonify(pets_list), 200
 
+
 @api.route('/pet/<int:pet_id>', methods=['GET'])
 def get_pet(pet_id):
     pet = Pet.query.get(pet_id)
@@ -240,7 +241,6 @@ def create_paypal_order():
         (l["href"] for l in result["links"] if l["rel"] == "approve"),
         None
     )
-
     return jsonify({
         "id": result.get("id"),
         "links": result.get("links", [])
@@ -292,5 +292,5 @@ def register_donation():
 
     db.session.add(donation)
     db.session.commit()
-
+    send_donation_success(data.get("email"), data.get("amount"))
     return jsonify({"msg": "Donation saved", "donation": donation.serialize()}), 201
