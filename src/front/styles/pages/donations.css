@@ -53,31 +53,6 @@
   margin-bottom: 12px;
 }
 
-.navbar {
-  background-color: transparent !important;
-  box-shadow: none;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  padding: 10px !important;
-}
-.nav-text {
-  color: white;
-  text-decoration: none;
-  margin-left: 40px;
-  font-family: "Pathway Gothic One", sans-serif;
-  font-size: 19px;
-}
-.nav-person {
-  color: white;
-  text-decoration: none;
-  margin-left: 40px;
-  font-family: "Pathway Gothic One", sans-serif;
-  font-size: 30px;
-}
-
 .logo-text {
   color: #376c73;
   font-family: "Baloo Chettan 2", cursive;

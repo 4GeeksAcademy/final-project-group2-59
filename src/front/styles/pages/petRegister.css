@@ -1,0 +1,45 @@
+
+
+
+
+
+/* Estilos del formulario */
+
+.pet-register_form-title {
+  font-family: "Arimo", sans-serif;
+  font-weight: bold;
+  font-size: 3rem;
+  color: #376c73;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  color: #545454;
+}
+
+
+
+/* Estilos para inputs, selects y textareas */
+.form-control {
+  background-color: #e6e6e6 ;
+  border: 1px solid #e6e6e6 ;
+  box-shadow: none ;
+  outline: none ;
+}
+
+.form-control:focus {
+  background-color: #e6e6e6 ;
+  border: 1px solid #e6e6e6 ;
+  box-shadow: none ;
+  outline: none ;
+}
+
+.boton-registro{
+  background-color: #e78951;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color:#e6e6e6;
+}

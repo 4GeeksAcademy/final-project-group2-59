@@ -1,0 +1,22 @@
+.container-blue-left {
+  background-color: #376c73;
+}
+
+.boton-iniciar-sesion {
+  width: 25rem;
+}
+
+.register_form {
+  margin: -3rem 0rem;
+}
+
+.register-body {
+  margin-top: 7rem;
+}
+
+/* .register-animals {
+  margin: -3rem 0rem;
+  position: absolute;
+  top: -48px;
+  left: 0;
+} */

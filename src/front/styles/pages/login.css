@@ -1,0 +1,18 @@
+.container-blue {
+  background-color: #376c73;
+  height: 40rem;
+}
+
+.login-form {
+  height: 45rem;
+  margin: -2rem 0rem;
+}
+
+.h1-login {
+  color: #376c73;
+}
+
+.boton-registrar {
+  width: 30rem;
+}
+

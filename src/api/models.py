@@ -19,6 +19,7 @@ class statusUserEnum(enum.Enum):
     INACTIVE = "Inactivo"
     BANNED = "Baneado"
 
+
 class roleUserEnum(enum.Enum):
     ADMIN = "Admin"
     USER = "Usuario"
@@ -145,7 +146,8 @@ class Bills(db.Model):
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     amount: Mapped[float] = mapped_column(nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=True)
-    transaction_number: Mapped[str] = mapped_column(String(100), nullable=False)
+    transaction_number: Mapped[str] = mapped_column(
+        String(100), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
     user_id: Mapped[int] = mapped_column(
@@ -170,12 +172,12 @@ class Bills(db.Model):
 
 class Donation(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False)
-    transaction_number: Mapped[str] = mapped_column(String(100), nullable=False)
-    email: Mapped[str] = mapped_column(String(100), nullable=False)
-    amount: Mapped[float] = mapped_column(nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=True)
+    transaction_number: Mapped[str] = mapped_column(String(100), nullable=True)
+    email: Mapped[str] = mapped_column(String(100), nullable=True)
+    amount: Mapped[float] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
-        timezone=True), default=datetime.now(timezone.utc), nullable=False)
+        timezone=True), default=datetime.now(timezone.utc), nullable=True)
     message: Mapped[str] = mapped_column(String(255), nullable=True)
 
     def __repr__(self):
