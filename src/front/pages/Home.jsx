@@ -6,6 +6,7 @@ import fondoAbout from "./img/fondo.jpeg";
 
 export const Home = () => {
   const { store, dispatch } = useGlobalReducer();
+  
 
   return (
     <section className="hero home-page">
