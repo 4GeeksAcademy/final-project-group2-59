@@ -96,7 +96,7 @@ export const Login = () => {
                                     type="password"
                                     className="form-control"
                                     id="forPassword"
-                                    placeholder="contraseñas"
+                                    placeholder="contraseña"
                                     name="password"
                                     value={user.password}
                                     onChange={handleChange}
