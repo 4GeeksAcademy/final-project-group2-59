@@ -95,10 +95,10 @@ def register():
 
 @api.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    data_form = request.form
 
-    email = data.get('email')
-    password = data.get('password')
+    email = data_form.get('email').strip()
+    password = data_form.get('password').strip()
 
     if not email or not password:
         return jsonify({"message": "Email and password are required"}), 400
@@ -109,6 +109,7 @@ def login():
         return jsonify({"message": "Invalid email or password"}), 401
 
     password_with_salt = f"{password}{user.salt}"
+
     if not check_password_hash(user.password, password_with_salt):
         return jsonify({"message": "Invalid email or password"}), 401
 
@@ -116,14 +117,13 @@ def login():
         return jsonify({"message": "Your account is not active"}), 403
 
     access_token = create_access_token(
-        identity=user.id,
+        identity=str(user.id),
         expires_delta=timedelta(hours=24)
     )
 
     return jsonify({
         "message": "Login successful",
-        "access_token": access_token,
-        "user": user.serialize()
+        "access_token": access_token
     }), 200
 
 
@@ -136,7 +136,7 @@ def get_current_user():
     if not user:
         return jsonify({"message": "User not found"}), 404
 
-    return jsonify(user.serialize()), 200
+    return jsonify({"user": user.serialize()}), 200
 
 
 @api.route('/pets', methods=['GET'])
