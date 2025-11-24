@@ -15,7 +15,7 @@ export const Navbar = () => {
 					<Link to="/" className="nav-text">
 						Inicio
 					</Link>
-					<Link to="/demo" className="nav-text">
+					<Link to="/pets" className="nav-text">
 						Mascotas
 					</Link>
 					<Link to="/donations" className="nav-text">
@@ -25,7 +25,7 @@ export const Navbar = () => {
 						Favoritos
 					</Link>
 					<Link to="/demo" className="nav-person">
-						<i class="bi bi-person-circle"></i>
+						<i className="bi bi-person-circle"></i>
 					</Link>
 				</div>
 			</div>

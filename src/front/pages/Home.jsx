@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-
+import {Link }from "react-router-dom";
 export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
@@ -11,8 +11,10 @@ export const Home = () => {
 			<div className="hero-text">
 			<h2>Tu Refugio de Confianza:<br/> Cuidando Vidas, Buscando Hogares</h2>
 			<div className="buttons">
-				<button className="btn info">Más Información</button>
-				<button className="btn adopt">Adopta Ahora</button>
+				<Link to="/about">
+					<button className="btn info">Más Información</button>
+				</Link>	
+					<button className="btn adopt">Adopta Ahora</button>
 			</div>
 			</div>
 		</section>

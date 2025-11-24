@@ -3,13 +3,14 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation
-from api.utils import generate_sitemap, APIException, valid_email
+from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token
 from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import os
 import cloudinary.uploader as uploader
+import requests
 from datetime import datetime, timezone, timedelta
 
 api = Blueprint('api', __name__)
@@ -56,6 +57,8 @@ def register():
 
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
+
+    birthdate = datetime.strptime(birthdate, "%m-%d-%Y").date()
 
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
@@ -142,6 +145,15 @@ def get_pets():
     pets_list = [pet.serialize() for pet in pets]
     return jsonify(pets_list), 200
 
+@api.route('/pet/<int:pet_id>', methods=['GET'])
+def get_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+
+    if not pet:
+        return jsonify({"message": "Pet not found"}), 404
+
+    return jsonify(pet.serialize()), 200
+
 
 @api.route('/petregister', methods=["POST"])
 def pet_register():
@@ -186,3 +198,99 @@ def pet_register():
         print(error.args)
         db.session.rollback()
         return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
+
+
+@api.route('/donations/create-paypal-order', methods=['POST'])
+def create_paypal_order():
+    data = request.get_json()
+    amount = data.get("amount")
+
+    if not amount:
+        return jsonify({"error": "Amount is required"}), 400
+
+    token = get_paypal_token()
+
+    url = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+
+    payload = {
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+                "amount": {
+                    "currency_code": "USD",
+                    "value": str(amount)
+                }
+            }
+        ],
+        "application_context": {
+            "return_url": "https://fictional-winner-59p6pwq7694fpxgq-3000.app.github.dev/success",
+            "cancel_url": "https://fictional-winner-59p6pwq7694fpxgq-3000.app.github.dev/success"
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {token}"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    result = response.json()
+
+    approval_url = next(
+        (l["href"] for l in result["links"] if l["rel"] == "approve"),
+        None
+    )
+
+    return jsonify({
+        "id": result.get("id"),
+        "links": result.get("links", [])
+    }), 200
+
+
+@api.route('/donations/capture', methods=['POST'])
+def capture_payment():
+    data = request.json
+
+    order_id = data.get("token") or data.get("orderID")
+
+    if not order_id:
+        return jsonify({"error": "Order ID or token required"}), 400
+
+    token = get_paypal_token()
+
+    url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}/capture"
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {token}"
+    }
+
+    response = requests.post(url, headers=headers)
+    result = response.json()
+
+    payer = result["purchase_units"][0]["payments"]["captures"][0]
+
+    return jsonify({
+        "capture_id": payer["id"],
+        "amount": payer["amount"]["value"],
+        "payer_email": result["payer"]["email_address"],
+        "payer_name": result["payer"]["name"]["given_name"]
+    }), 200
+
+
+@api.route('/donations/register', methods=['POST'])
+def register_donation():
+    data = request.json
+
+    donation = Donation(
+        name=data.get("name"),
+        email=data.get("email"),
+        amount=data.get("amount"),
+        transaction_number=data.get("transaction_number"),
+        created_at=datetime.now(timezone.utc)
+    )
+
+    db.session.add(donation)
+    db.session.commit()
+
+    return jsonify({"msg": "Donation saved", "donation": donation.serialize()}), 201
