@@ -6,19 +6,19 @@ import {
   Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { Donations } from "./pages/Donations"
 import { Register } from "./pages/Register";
 import Success from "./pages/Success";
-
 import { PetRegister } from "./pages/PetRegister";
-import {Login} from "./pages/Login"
+import { Login } from "./pages/Login";
 import { AboutUs } from "./pages/AboutUs";
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
 import { Favorites } from "./pages/Favorites";
+import { HomeAndAbout } from "./pages/Home";
+import { Footer } from "./pages/Footer";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,10 +30,8 @@ export const router = createBrowserRouter(
 
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-
-      {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-      <Route path="/" element={<Home />} />
-      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
+      <Route path="/" element={<HomeAndAbout />} />
+      <Route path="/single/:theId" element={<Single />} />
       <Route path="/demo" element={<Demo />} />
       <Route path="/donations" element={<Donations />} />
       <Route path="/register" element={<Register />} />
@@ -44,7 +42,8 @@ export const router = createBrowserRouter(
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="/" element={<Footer />} />  {/* footer en todas las páginas */}
     </Route>
-  )
 
+  )
 );

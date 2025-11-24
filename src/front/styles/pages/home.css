@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* :root {
+=======
+:root {
+>>>>>>> initialpage
   --color-principal: #e78951;
   --color-btn: #e89d72;
   --color-secundario: #376c73;
@@ -12,17 +16,27 @@
   box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 body {
+=======
+.home-page {
+>>>>>>> initialpage
   font-family: "Poppins", sans-serif;
   background-color: var(--color-fondo);
   color: var(--color-texto);
 
+<<<<<<< HEAD
   background-image: url("fondoc.jpeg");
+=======
+  /* ruta correcta desde styles/pages/home.css hacia pages/img/fondo.jpeg */
+  background-image: url("../../img/fondo.jpeg");
+>>>>>>> initialpage
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 
+<<<<<<< HEAD
 /* NAVBAR */
 /* .navbar {
   display: flex;
@@ -32,6 +46,8 @@ body {
   background-color: var(--color-fondo);
 }
 
+=======
+>>>>>>> initialpage
 .logo {
   display: flex;
   align-items: center;
@@ -43,6 +59,7 @@ body {
   height: 90px;
 }
 
+<<<<<<< HEAD
 nav ul {
   list-style: none;
   display: flex;
@@ -60,6 +77,8 @@ nav a:hover {
   color: var(--color-secundario);
 }
 
+=======
+>>>>>>> initialpage
 .actions .btn {
   margin-left: 0.5rem;
   padding: 0.6rem 1.2rem;
@@ -89,16 +108,23 @@ nav a:hover {
 }
 
 /* HERO SECTION */
+<<<<<<< HEAD
 /* HERO */
 /* .hero {
+=======
+.hero {
+>>>>>>> initialpage
   position: relative;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 6rem 5rem 3rem;
+<<<<<<< HEAD
   background: url("img/fondo.jpeg") no-repeat center center/cover;
   z-index: 1;
+=======
+>>>>>>> initialpage
 }
 
 .hero-text {
@@ -106,11 +132,19 @@ nav a:hover {
 }
 
 .hero-text h2 {
+<<<<<<< HEAD
   font-size: 2.8rem;
   font-weight: 800;
   line-height: 1.3;
   color: black;
   text-align: center;
+=======
+  font-size: 2.8rem !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  color: black !important;
+  text-align: center !important;
+>>>>>>> initialpage
 }
 
 .buttons {
@@ -142,4 +176,8 @@ nav a:hover {
 .hero-image img {
   width: 800px;
   border-radius: 120px;
+<<<<<<< HEAD
 } */ 
+=======
+}
+>>>>>>> initialpage

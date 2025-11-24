@@ -1,39 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap");
 
-.donations-bg {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-}
+@media (max-width: 768px) {
+  .card-donations {
+    width: 100% !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    border-radius: 50px 50px 0 0 !important;
+  }
 
-.donations-bg-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-}
-
-.card-donations {
-  position: relative;
-  z-index: 10;
-}
-
-@media (min-width: 768px) {
-  .donations {
-    height: 100vh;
-    display: flex;
-    align-items: center;
+  .donations-bg {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end !important;
+    padding: 0 !important;
   }
 }
 
 .card-donations {
-  width: 100%;
+  margin-top: 100px;
   width: 450px;
+  border-radius: 50px 50px 50px 50px !important;
 }
 
 .card-title {

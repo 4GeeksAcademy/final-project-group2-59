@@ -3,6 +3,7 @@ import re
 import base64
 import requests
 import os
+from api.email_services import send_email
 
 
 class APIException(Exception):
@@ -86,3 +87,24 @@ def get_paypal_token():
         print("PayPal ERROR:", res.text)
 
     return res.json()["access_token"]
+
+
+def send_donation_success(to_email, amount):
+    html = f"""
+    <div style="max-width: 500px; margin: auto; padding: 20px; 
+        background: #ffffff; border-radius: 16px; 
+        font-family: Arial, sans-serif; text-align: center;">
+        
+        <h2 style="color: #2c3e50;">¡Gracias por tu donación! 💛</h2>
+
+        <p style="font-size: 16px; color: #555;">
+            Hemos recibido tu aporte de 
+            <strong style="color: #000;">{amount} USD</strong>.
+        </p>
+
+        <p style="font-size: 14px; color: #777;">
+            Tu apoyo nos ayuda a seguir adelante.
+        </p>
+    </div>
+    """
+    send_email(to_email, "Donación Exitosa", html)
