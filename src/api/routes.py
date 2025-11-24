@@ -94,8 +94,8 @@ def register():
 def login():
     data_form = request.form
 
-    email = data_form.get('email')
-    password = data_form.get('password')
+    email = data_form.get('email').strip()
+    password = data_form.get('password').strip()
 
     if not email or not password:
         return jsonify({"message": "Email and password are required"}), 400
