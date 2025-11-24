@@ -58,7 +58,7 @@ def register():
     if user_exist:
         return jsonify({"message": "The email is already used"}), 409
 
-    birthdate = datetime.strptime(birthdate, "%m-%d-%Y").date()
+    birthdate = datetime.strptime(birthdate, "%Y-%m-%d").date()
 
     salt = b64encode(os.urandom(32)).decode("utf-8")
     password = generate_password_hash(f"{password}{salt}")
@@ -144,6 +144,7 @@ def get_pets():
     pets = Pet.query.all()
     pets_list = [pet.serialize() for pet in pets]
     return jsonify(pets_list), 200
+
 
 @api.route('/pet/<int:pet_id>', methods=['GET'])
 def get_pet(pet_id):
@@ -294,3 +295,69 @@ def register_donation():
     db.session.commit()
 
     return jsonify({"msg": "Donation saved", "donation": donation.serialize()}), 201
+
+
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorites():
+    current_user_id = get_jwt_identity()
+
+    favorites = Favorite.query.filter_by(user_id=current_user_id).all()
+    pet_ids = [fav.pet_id for fav in favorites]
+
+    return jsonify({"favorites": pet_ids}), 200
+
+
+@api.route('/favorites/<int:pet_id>', methods=['POST'])
+@jwt_required()
+def add_favorite(pet_id):
+    current_user_id = get_jwt_identity()
+
+    pet = Pet.query.get(pet_id)
+    if not pet:
+        return jsonify({"message": "Pet not found"}), 404
+
+    existing_favorite = Favorite.query.filter_by(
+        user_id=current_user_id,
+        pet_id=pet_id
+    ).first()
+
+    if existing_favorite:
+        return jsonify({"message": "Pet already in favorites"}), 409
+
+    new_favorite = Favorite(
+        user_id=current_user_id,
+        pet_id=pet_id
+    )
+
+    db.session.add(new_favorite)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "Pet added to favorites", "pet_id": pet_id}), 201
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"message": "Error adding to favorites", "error": str(error)}), 500
+
+
+@api.route('/favorites/<int:pet_id>', methods=['DELETE'])
+@jwt_required()
+def remove_favorite(pet_id):
+    current_user_id = get_jwt_identity()
+
+    favorite = Favorite.query.filter_by(
+        user_id=current_user_id,
+        pet_id=pet_id
+    ).first()
+
+    if not favorite:
+        return jsonify({"message": "Favorite not found"}), 404
+
+    db.session.delete(favorite)
+
+    try:
+        db.session.commit()
+        return jsonify({"message": "Pet removed from favorites", "pet_id": pet_id}), 200
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({"message": "Error removing from favorites", "error": str(error)}), 500

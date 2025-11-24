@@ -76,7 +76,7 @@ export const Register = () => {
         formData.append("password", user.password);
         formData.append("avatar", user.avatar);
 
-        const response = await fetch(`${url}api/register`, {
+        const response = await fetch(`${url}/api/register`, {
             method: "POST",
             body: formData,
         });

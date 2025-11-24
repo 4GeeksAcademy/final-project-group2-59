@@ -34,7 +34,7 @@ export const Navbar = () => {
 						<Link to="/donations" className="nav-text">
 							Donaciones
 						</Link>
-						<Link to="/demo" className="nav-text">
+						<Link to="/favorites" className="nav-text">
 							Favoritos
 						</Link>
 						<Link to="/login" className="nav-text">
@@ -73,7 +73,7 @@ export const Navbar = () => {
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/donations')}>
 							Donaciones
 						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/demo')}>
+						<a className="nav-text nav-link" onClick={() => handleNavClick('/favorites')}>
 							Favoritos
 						</a>
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>

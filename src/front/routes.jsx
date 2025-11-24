@@ -18,6 +18,7 @@ import {Login} from "./pages/Login"
 import { AboutUs } from "./pages/AboutUs";
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
+import { Favorites } from "./pages/Favorites";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ export const router = createBrowserRouter(
       <Route path="/about" element={<AboutUs />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
+      <Route path="/favorites" element={<Favorites />} />
     </Route>
   )
 
