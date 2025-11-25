@@ -14,10 +14,11 @@ import { Register } from "./pages/Register";
 import Success from "./pages/Success";
 
 import { PetRegister } from "./pages/PetRegister";
-import {Login} from "./pages/Login"
+import { Login } from "./pages/Login"
 import { AboutUs } from "./pages/AboutUs";
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
+import { Profile } from "./pages/Profile";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,8 @@ export const router = createBrowserRouter(
       <Route path="/about" element={<AboutUs />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
+      <Route path="/profile" element={<Profile />} />
+
     </Route>
   )
 
