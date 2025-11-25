@@ -61,6 +61,22 @@ export const Login = () => {
                     payload: dataUser.user
                 })
 
+                
+                const favoritesResponse = await fetch(`${backendUrl}/api/favorites`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${data.access_token}`
+                    }
+                })
+
+                if (favoritesResponse.ok) {
+                    const favoritesData = await favoritesResponse.json()
+                    dispatch({
+                        type: "SET_FAVORITES",
+                        payload: favoritesData.favorites
+                    })
+                }
+
                 localStorage.setItem("token", data.access_token)
                 localStorage.setItem("user", JSON.stringify(dataUser.user))
 
