@@ -1,48 +1,54 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/pages/home.css";
-import "../styles/pages/about.css";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import perroimg from "./img/perritos-about.jpg";
-import fondo from "./img/fondo.jpeg";
+
 
 export const HomeAndAbout = () => {
   const { store, dispatch } = useGlobalReducer();
-  
+  const navigate = useNavigate();
+
+  const scrollToAbout = () => {
+    document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const goToPets = () => {
+    navigate('/pets');
+  };
 
   return (
     <>
       {/* HOME */}
-      <section className="home-page d-flex align-items-center" style={{ minHeight: "100vh" }}>
-        <div className="container text-center">
-          <h2 className="fw-bold" style={{ fontSize: "2.8rem", lineHeight: "1.3" }}>
-            Tu Refugio de Confianza:
-            <br /> Cuidando Vidas, Buscando Hogares
-          </h2>
+      <section className="home-page">
+        <div className="home-container">
+          <img src="https://png.pngtree.com/png-vector/20240623/ourmid/pngtree-portrait-of-happy-dog-and-cat-that-looking-at-the-camera-png-image_12828737.png" alt="Refugio Patitas Felices" className="home_pets" />
 
-          <div className="mt-4 d-flex justify-content-center gap-3">
-            <button className="btn px-4 py-2"
-              style={{
-                backgroundColor: "var(--color-secundario)",
-                color: "white",
-                borderRadius: "16px"
-              }}>
-              Más Información
-            </button>
+          <div className="home-content">
+            <h2 className="fw-bold">
+              Tu Refugio de Confianza:
+              <br /> Cuidando Vidas, Buscando Hogares
+            </h2>
 
-            <button className="btn px-4 py-2"
-              style={{
-                backgroundColor: "var(--color-principal)",
-                color: "white",
-                borderRadius: "16px"
-              }}>
-              Adopta Ahora
-            </button>
+            <div className="mt-4 d-flex justify-content-center gap-3">
+              <button className="btn px-4 py-2 home_btn-about"
+                onClick={scrollToAbout}
+              >
+                Más Información
+              </button>
+
+              <button className="btn px-4 py-2 home_btn-pets"
+                onClick={goToPets}
+              >
+                Adopta Ahora
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section className="about-section fondo-mascotas">
+      <section id="about-section" className="about-section fondo-mascotas">
         <div className="container">
           <div className="row align-items-center">
 
@@ -67,15 +73,7 @@ export const HomeAndAbout = () => {
                 merece un hogar lleno de cariño y nosotros hacemos posible ese primer paso.
               </p>
 
-              <button
-                className="btn mt-3 px-4 py-2"
-                style={{
-                  backgroundColor: "var(--color-principal)",
-                  color: "white",
-                  borderRadius: "16px"
-                }}>
-                Conocer Más
-              </button>
+
             </div>
 
           </div>

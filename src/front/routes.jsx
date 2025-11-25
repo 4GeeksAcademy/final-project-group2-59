@@ -13,12 +13,11 @@ import { Register } from "./pages/Register";
 import Success from "./pages/Success";
 import { PetRegister } from "./pages/PetRegister";
 import { Login } from "./pages/Login";
-import { AboutUs } from "./pages/AboutUs";
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
 import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
-import { Footer } from "./pages/Footer";
+import { Footer } from "./components/Footer";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,7 +37,6 @@ export const router = createBrowserRouter(
       <Route path="/success" element={<Success />} />
       <Route path="/petregister" element={<PetRegister />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/about" element={<AboutUs />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/favorites" element={<Favorites />} />
