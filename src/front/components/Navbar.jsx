@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import Logo from "../assets/img/logo.png"
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../styles/components/navbar.css";
 
 export const Navbar = () => {
+	const { store, dispatch } = useGlobalReducer();
 	const navigate = useNavigate();
 
 	const handleNavClick = (path) => {
@@ -21,7 +23,7 @@ export const Navbar = () => {
 				<div className="container">
 					<Link to="/" className="d-flex align-items-center logo-text navbar-brand">
 						<img src={Logo} className="logo-icon" />
-						<span className="logo-text mb-0 h1 d-none d-md-inline">Patitas Felices</span>
+						<span className="logo-text mb-0 h1">Patitas Felices</span>
 					</Link>
 
 					<div className="d-none d-md-flex ms-auto">
@@ -37,15 +39,24 @@ export const Navbar = () => {
 						<Link to="/favorites" className="nav-text">
 							Favoritos
 						</Link>
-						<Link to="/login" className="nav-text">
-							Ingresar
-						</Link>
-						<Link to="/register" className="nav-text">
-							Registrarse
-						</Link>
-					</div>
-
-					<button
+						{!store.token ? (
+							<>
+								<Link to="/login" className="nav-text">
+									Ingresar
+								</Link>
+								<Link to="/register" className="nav-text">
+									Registrarse
+								</Link>
+							</>
+						) : (
+							<Link to="/" className="nav-text" onClick={() => {
+								dispatch({ type: 'LOGOUT' });
+								localStorage.removeItem('user');
+							}}>
+								Cerrar Sesión
+							</Link>
+						)}
+					</div>					<button
 						className="navbar-toggler d-md-none"
 						type="button"
 						data-bs-toggle="offcanvas"
@@ -76,12 +87,24 @@ export const Navbar = () => {
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/favorites')}>
 							Favoritos
 						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>
-							Ingresar
-						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/register')}>
-							Registrarse
-						</a>
+						{!store.token ? (
+							<>
+								<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>
+									Ingresar
+								</a>
+								<a className="nav-text nav-link" onClick={() => handleNavClick('/register')}>
+									Registrarse
+								</a>
+							</>
+						) : (
+							<a className="nav-text nav-link" onClick={() => {
+								dispatch({ type: 'LOGOUT' });
+								localStorage.removeItem('user');
+								handleNavClick('/');
+							}}>
+								Cerrar Sesión
+							</a>
+						)}
 					</div>
 				</div>
 			</div>
