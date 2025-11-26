@@ -69,6 +69,11 @@ def register():
         avatar = uploader.upload(avatar)
         avatar = avatar["secure_url"]
 
+    rol = "USER"
+    if email == "patitasfelicess123@gmail.com":
+        rol = "ADMIN"
+    
+
     new_user = User(
         email=email,
         full_name=full_name,
@@ -76,7 +81,7 @@ def register():
         gender=gender,
         avatar=avatar,
         password=password,
-        role="USER",
+        role= rol,
         status="ACTIVE",
         salt=salt
     )

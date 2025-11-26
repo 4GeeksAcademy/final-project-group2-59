@@ -21,12 +21,12 @@
   max-width: 500px;
   height: auto;
   object-fit: contain;
-  order: 1; 
+  order: 1;
 }
 
 .home-content {
   text-align: center;
-  order: 2; 
+  order: 2;
 }
 
 /* Responsive: Pantalla completa (Desktop) */
@@ -54,6 +54,34 @@
 }
 
 /* Buttons Styles */
-.home_btn-about {
-  
+.boton {
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.boton:hover {
+  opacity: 0.9;
+}
+
+.home_btn-orange {
+  background-color: #e78951;
+  color: #ffffff;
+}
+
+.home_btn-green {
+  background-color: #376c73;
+  color: #ffffff;
+}
+
+/* Configuración sobre nosotros */
+
+.home_about-us-text {
+  font-size: 1.3rem;
+}
+.home_about-us-icon{
+  font-size: 3rem;
+  color: #e78951;
 }
