@@ -1,0 +1,14 @@
+.container-blue-send-mail {
+  background-color: #376c73;
+  /* height: 40rem; */
+}
+
+.send-mail-form {
+    width: 50rem;
+    margin: -3rem 0rem;
+}
+
+.send-mail-body {
+    margin-top: 3rem;
+    margin-bottom: 30rem;
+}

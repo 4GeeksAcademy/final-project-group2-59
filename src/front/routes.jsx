@@ -18,6 +18,7 @@ import { Pet } from "./pages/Pet";
 import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
 import { Footer } from "./components/Footer";
+import { SendMailToResetPassword } from "./pages/SendMailToResetPassword";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="send-mail-password" element={<SendMailToResetPassword />} />
       <Route path="/" element={<Footer />} />  {/* footer en todas las páginas */}
     </Route>
 

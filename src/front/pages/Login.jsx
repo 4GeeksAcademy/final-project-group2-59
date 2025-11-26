@@ -121,7 +121,7 @@ export const Login = () => {
                             <button className="btn mt-3 mb-3 btn-outline-primary col-12">
                                 Iniciar sesion
                             </button>
-                            <Link>¿Olvidaste tu contraseña?</Link>
+                            <Link to="/send-mail-password">¿Olvidaste tu contraseña?</Link>
                         </form>
                     </div>
                     <div className="col-12 col-md-6 mt-5 text-center pt-5">
