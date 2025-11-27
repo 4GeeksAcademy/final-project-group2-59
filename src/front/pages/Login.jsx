@@ -7,6 +7,7 @@ import "../styles/pages/login.css"
 import logoimg from "../assets/img/logo.png";
 import animalsImg from "../assets/img/animals.png";
 import googleimg from "../assets/img/google.png";
+import { Toaster, toast } from "sonner";
 
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -47,6 +48,8 @@ export const Login = () => {
             if (response.ok) {
                 dispatch({ type: "SET_TOKEN", payload: data.access_token })
 
+                setUser(initialUser)
+
                 const responseUser = await fetch(`${backendUrl}/api/me`, {
                     method: "GET",
                     headers: {
@@ -81,14 +84,18 @@ export const Login = () => {
                 localStorage.setItem("user", JSON.stringify(dataUser.user))
 
                 navigate("/")
+            } else {
+                toast.error("El correo y la contraseña no coinciden")
             }
         } catch (error) {
             console.log(error)
+            
         }
     }
 
     return (
         <div className="login-body mt-5">
+            <Toaster position="top-center"/>
             <div className="container container-blue rounded-4">
                 <div className="row">
                     <div className="col-12 col-md-6">
@@ -121,7 +128,7 @@ export const Login = () => {
                             <button className="btn mt-3 mb-3 btn-outline-primary col-12">
                                 Iniciar sesion
                             </button>
-                            <Link>¿Olvidaste tu contraseña?</Link>
+                            <Link to="/send-mail-password">¿Olvidaste tu contraseña?</Link>
                         </form>
                     </div>
                     <div className="col-12 col-md-6 mt-5 text-center pt-5">
