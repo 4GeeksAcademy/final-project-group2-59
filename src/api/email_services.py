@@ -20,8 +20,13 @@ def send_email(to_email, subject, html_content):
     message.attach(html_part)
 
     # Conexión al servidor SMTP
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(EMAIL_USER, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_USER, to_email, message.as_string())
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(EMAIL_USER, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_USER, to_email, message.as_string())
 
-    print("Correo enviado exitosamente!")
+        return True
+    except Exception as error:
+        return False
+
+
