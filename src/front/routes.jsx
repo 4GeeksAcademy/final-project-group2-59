@@ -17,7 +17,8 @@ import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
 import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
-import { Footer } from "./components/Footer";
+import { Protectedadmin } from "./components/Protectedadmin";
+import { Dashboard } from "./pages/Dashboard";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,12 +36,20 @@ export const router = createBrowserRouter(
       <Route path="/donations" element={<Donations />} />
       <Route path="/register" element={<Register />} />
       <Route path="/success" element={<Success />} />
-      <Route path="/petregister" element={<PetRegister />} />
       <Route path="/login" element={<Login />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/favorites" element={<Favorites />} />
-      <Route path="/" element={<Footer />} />  {/* footer en todas las páginas */}
+      <Route path="/dashboard" element={
+        <Protectedadmin>
+          <Dashboard />
+        </Protectedadmin>
+      } />
+      <Route path="/dashboard/petregister" element={
+        <Protectedadmin>
+          <PetRegister />
+        </Protectedadmin>
+      } />
     </Route>
 
   )
