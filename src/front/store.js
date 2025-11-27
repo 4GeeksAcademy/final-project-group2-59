@@ -2,7 +2,7 @@ export const initialStore = () => {
   return {
     message: null,
     pet: null,
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")) || null,
     token: localStorage.getItem("token") || null,
     favorites: [],
   };
