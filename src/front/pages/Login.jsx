@@ -98,7 +98,7 @@ export const Login = () => {
             <Toaster position="top-center"/>
             <div className="container container-blue rounded-4">
                 <div className="row">
-                    <div className="text-right-login col-12 col-md-6 d-none d-sm-block d-md-none mt-5 text-center pt-5 mb-0 mb-sm-5 pb-0 pb-sm-4">
+                    <div className="text-right-login col-12 col-md-6 d-none d-sm-block d-md-none mt-5 text-center pt-5 pt-sm-0 mb-0 mb-sm-5 pb-0 pb-sm-4">
                         <h1 className="text-light mt-5 mt-sm-0 pt-5 pt-sm-0 mb-3">¿Aún no tienes una cuenta?</h1>
                         <p className="fs-5 text-light fw-light mb-4">Registrate para que seas parte de nuestra comunidad.</p>
                         <Link className="boton-registrar btn btn-outline-light rounded-5 btn-lg border-3">Registrar</Link>
