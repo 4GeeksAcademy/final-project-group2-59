@@ -106,19 +106,19 @@ export const Register = () => {
             <div className="container border rounded-4 container-blue-left">
                 {/* <img src={animals} alt="animales" className="register-animals col-12 col-md-6" /> */}
                 <div className="row">
-                    <div className=" col-12 col-md-6 text-center mt-5 mt-sm-0 pt-5 pt-sm-0 mb-none mb-sm-3 mb-0 mb-sm-5 pb-0 pb-sm-4">
+                    <div className=" col-12 col-md-6 text-center mt-0 mt-md-5 pt-0 pt-md-5 mb-5 mb-md-0 pb-4 pb-md-0">
                         <h1 className="mb-3 mt-5 text-light">¿Ya tienes una cuenta?</h1>
                         <p className="mb-4 fs-5 text-light fw-light">
                             Inicia Sesión para que seas parte de nuestra <br /> comunidad.
                         </p>
-                        <Link className="boton-iniciar-sesion btn btn-outline-light btn-lg rounded-5 border-3">Iniciar Sesion</Link>
+                        <Link to="/login" className="boton-iniciar-sesion btn btn-outline-light btn-lg rounded-5 border-3">Iniciar Sesion</Link>
                     </div>
                     <div className="col-12 col-md-6">
                         <form
                             className="p-5 bg-white rounded-5 register_form "
                             onSubmit={handleSubmit}
                         >
-                            <h1 className="text-center mb-4">Registrar</h1>
+                            <h1 className="h1-register text-center mb-4">Registrar</h1>
                             <div className="form-group mb-3">
                                 <label htmlFor="forName" className="form-label">
                                     Nombre completo:
