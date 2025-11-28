@@ -19,6 +19,8 @@ import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
 import { Protectedadmin } from "./components/Protectedadmin";
 import { Dashboard } from "./pages/Dashboard";
+import { PetManagent } from "./pages/PetManagent";
+import { PetEdit } from "./pages/PetEdit";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,7 +52,18 @@ export const router = createBrowserRouter(
           <PetRegister />
         </Protectedadmin>
       } />
+      <Route path="/dashboard/petmanagement" element={
+        <Protectedadmin>
+          <PetManagent />
+        </Protectedadmin>
+      } />
+      <Route path="/dashboard/petedit/:petId" element={
+        <Protectedadmin>
+          <PetEdit />
+        </Protectedadmin>
+      } />
     </Route>
+    
 
   )
 );

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Pet, Favorite, Bills, Donation
+from api.models import db, User, Pet, Favorite, Bills, Donation, sexPetEnum, speciesPetEnum, statusPetEnum
 from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success
 from flask_cors import CORS
 from base64 import b64encode
@@ -67,13 +67,12 @@ def register():
     avatar = "https://i.pravatar.cc/300"
 
     if avatar_db is not None:
-        avatar = uploader.upload(avatar)
+        avatar = uploader.upload(avatar_db)
         avatar = avatar["secure_url"]
 
     rol = "USER"
     if email == "patitasfelicess123@gmail.com":
         rol = "ADMIN"
-    
 
     new_user = User(
         email=email,
@@ -82,7 +81,7 @@ def register():
         gender=gender,
         avatar=avatar,
         password=password,
-        role= rol,
+        role=rol,
         status="ACTIVE",
         salt=salt
     )
@@ -162,7 +161,7 @@ def get_pet(pet_id):
     return jsonify(pet.serialize()), 200
 
 
-@api.route('/petregister', methods=["POST"])
+@api.route('/pet', methods=["POST"])
 def pet_register():
     try:
         data_form = request.form
@@ -205,6 +204,73 @@ def pet_register():
         print(error.args)
         db.session.rollback()
         return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
+
+
+@api.route('/pet/<int:pet_id>', methods=['DELETE'])
+def delete_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+
+    if not pet:
+        return jsonify({"message": "Pet not found"}), 404
+
+    db.session.delete(pet)
+    db.session.commit()
+
+    return jsonify({"message": "Pet deleted successfully"}), 200
+
+
+@api.route('/pet/<int:pet_id>', methods=['PUT'])
+def update_pet(pet_id):
+    try:
+        pet = Pet.query.get(pet_id)
+
+        if not pet:
+            return jsonify({"message": "Pet not found"}), 404
+
+        data_form = request.form
+        data_files = request.files
+        print(data_form, "DATA FORM")
+        
+
+        if data_form.get("name"):
+            pet.name = data_form.get("name")
+
+        if data_form.get("birthdate"):
+            pet.birthdate = datetime.strptime(
+                data_form.get("birthdate"), "%Y-%m-%d").date()
+
+        if data_form.get("species"):
+            pet.species = data_form.get("species")
+        
+
+        print(pet.serialize(), "UPDATED PET")
+
+        if data_form.get("breed"):
+            pet.breed = data_form.get("breed")
+
+        if data_form.get("sex"):
+            pet.sex = data_form.get("sex")
+
+        if data_form.get("description"):
+            pet.description = data_form.get("description")
+
+        if data_form.get("status"):
+            pet.status = data_form.get("status")
+        
+
+        image_db = data_files.get("image")
+        if image_db is not None:
+            image = uploader.upload(image_db)
+            pet.image = image["secure_url"]
+
+        
+        db.session.commit()
+        return jsonify({"message": "Pet updated successfully", "pet": pet.serialize()}), 200
+
+    except Exception as error:
+        print(error.args)
+        db.session.rollback()
+        return jsonify({"message": "Error updating pet", "error": f"{error.args}"}), 500
 
 
 @api.route('/donations/create-paypal-order', methods=['POST'])
@@ -366,14 +432,14 @@ def remove_favorite(pet_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"message": "Error removing from favorites", "error": str(error)}), 500
-    
 
-    
+
 @api.route("send-mail-reset-password", methods=["POST"])
 def send_mail_reset_password():
     data = request.get_json()
 
-    token = create_access_token(identity=str(data.get("email")), expires_delta=timedelta(minutes=20))
+    token = create_access_token(identity=str(
+        data.get("email")), expires_delta=timedelta(minutes=20))
 
     html = f"""
 
@@ -399,7 +465,8 @@ def send_mail_reset_password():
             return jsonify({"message": "Intente mas tarde"}), 400
     except Exception as error:
         return jsonify({"message": f"Ocurrio un error inesperado{error}"}), 500
-    
+
+
 @api.route("/change-password", methods=["PUT"])
 @jwt_required()
 def change_password():
@@ -407,7 +474,7 @@ def change_password():
     email = get_jwt_identity()
     password = request.get_json()
 
-    user = User.query.filter_by(email = email).one_or_none()
+    user = User.query.filter_by(email=email).one_or_none()
 
     if user is not None:
         salt = b64encode(os.urandom(32)).decode("utf-8")
