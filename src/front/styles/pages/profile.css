@@ -1,0 +1,38 @@
+.profile-form {
+  border-radius: 50px 50px 50px 50px !important;
+}
+.profile-title {
+  color: #376c73;
+  font-size: 39px;
+}
+.btn-profile:hover {
+  background-color: #cf6e37;
+  transform: scale(1.02);
+  color: white;
+}
+
+.btn-profile:active {
+  transform: scale(0.98);
+}
+.btn-profile {
+  background-color: #ff8a3d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 3px 8px rgba(255, 138, 61, 0.4);
+}
+.profile-text {
+  color: #376c73;
+  font-family: "Baloo Chettan 2", cursive;
+  font-size: 29px;
+
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  text-decoration: none;
+}

@@ -39,6 +39,18 @@ export const Navbar = () => {
 						<Link to="/favorites" className="nav-text">
 							Favoritos
 						</Link>
+						<Link to="/login" className="nav-text">
+							Ingresar
+						</Link>
+						<Link to="/register" className="nav-text">
+							Registrarse
+						</Link>
+						<Link to="/profile" className="nav-text">
+							Editar Perfil
+						</Link>
+					</div>
+
+					<button
 						{store.user?.role === 'Admin' && (
 							<Link to="/dashboard" className="nav-text">
 								Dashboard
@@ -91,6 +103,15 @@ export const Navbar = () => {
 						</a>
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/favorites')}>
 							Favoritos
+						</a>
+						<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>
+							Ingresar
+						</a>
+						<a className="nav-text nav-link" onClick={() => handleNavClick('/register')}>
+							Registrarse
+						</a>
+						<a className="nav-text nav-link" onClick={() => handleNavClick('/profile')}>
+							Editar Perfil
 						</a>
 						{store.user?.role === 'Admin' && (
 							<a className="nav-text nav-link" onClick={() => handleNavClick('/dashboard')}>
