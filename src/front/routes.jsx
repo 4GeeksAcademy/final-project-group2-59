@@ -50,6 +50,11 @@ export const router = createBrowserRouter(
           <PetRegister />
         </Protectedadmin>
       } />
+      <Route path="/dashboard/users" element={
+        <Protectedadmin>
+          <PetRegister />
+        </Protectedadmin>
+      } />
     </Route>
 
   )

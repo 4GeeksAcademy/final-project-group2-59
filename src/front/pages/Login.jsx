@@ -130,7 +130,7 @@ export const Login = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <button className="btn mt-3 mb-3 btn-outline-primary col-12">
+                            <button className="boton-registrar btn mt-3 mb-3 col-12">
                                 Iniciar sesion
                             </button>
                             <Link to="/send-mail-password">¿Olvidaste tu contraseña?</Link>
@@ -139,7 +139,7 @@ export const Login = () => {
                     <div className="text-right-login col-12 col-md-6 d-sm-none d-md-block mt-5 text-center pt-5">
                         <h1 className="text-light mt-5 pt-5 mb-3">¿Aún no tienes una cuenta?</h1>
                         <p className="fs-5 text-light fw-light mb-4">Registrate para que seas parte de nuestra comunidad.</p>
-                        <Link to="/register" className="boton-registrar btn btn-outline-light rounded-5 btn-lg border-3">Registrar</Link>
+                        <Link to="/register" className="boton-registrar btn rounded-5 btn-lg border-3">Registrar</Link>
                     </div>
                 </div>
             </div>

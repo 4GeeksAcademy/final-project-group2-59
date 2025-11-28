@@ -2,9 +2,13 @@
   background-color: #376c73;
 }
 
-/* .boton-iniciar-sesion {
-  width: 25rem;
-} */
+.boton-iniciar-sesion {
+  background-color: #e78951;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color:#e6e6e6;
+}
 
 .register_form {
   margin: -3rem 0rem;
