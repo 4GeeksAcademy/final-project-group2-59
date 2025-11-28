@@ -1,6 +1,6 @@
 .container-blue {
   background-color: #376c73;
-  height: 40rem;
+  /* height: 40rem; */
 }
 
 .login-form {
@@ -15,5 +15,9 @@
 .boton-registrar {
   width: 30rem;
 }
+
+/* .text-right-login {
+  height: 40rem;
+} */
 
 

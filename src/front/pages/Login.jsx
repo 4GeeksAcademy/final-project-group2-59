@@ -98,6 +98,11 @@ export const Login = () => {
             <Toaster position="top-center"/>
             <div className="container container-blue rounded-4">
                 <div className="row">
+                    <div className="text-right-login col-12 col-md-6 d-none d-sm-block d-md-none mt-5 text-center pt-5 mb-0 mb-sm-5 pb-0 pb-sm-4">
+                        <h1 className="text-light mt-5 mt-sm-0 pt-5 pt-sm-0 mb-3">¿Aún no tienes una cuenta?</h1>
+                        <p className="fs-5 text-light fw-light mb-4">Registrate para que seas parte de nuestra comunidad.</p>
+                        <Link className="boton-registrar btn btn-outline-light rounded-5 btn-lg border-3">Registrar</Link>
+                    </div>
                     <div className="col-12 col-md-6">
                         <form className="bg-light p-5 login-form rounded-5" onSubmit={handleSubmit}>
                             <h1 className="h1-login text-center mt-5 pt-5 mb-3">Iniciar sesion</h1>
@@ -131,7 +136,7 @@ export const Login = () => {
                             <Link to="/send-mail-password">¿Olvidaste tu contraseña?</Link>
                         </form>
                     </div>
-                    <div className="col-12 col-md-6 mt-5 text-center pt-5">
+                    <div className="text-right-login col-12 col-md-6 d-sm-none d-md-block mt-5 text-center pt-5">
                         <h1 className="text-light mt-5 pt-5 mb-3">¿Aún no tienes una cuenta?</h1>
                         <p className="fs-5 text-light fw-light mb-4">Registrate para que seas parte de nuestra comunidad.</p>
                         <Link className="boton-registrar btn btn-outline-light rounded-5 btn-lg border-3">Registrar</Link>
