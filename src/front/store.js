@@ -44,6 +44,7 @@ export default function storeReducer(store, action = {}) {
         ...store,
         user: null,
         token: null,
+        favorites: [],
         isAuthenticated: false,
       };
 

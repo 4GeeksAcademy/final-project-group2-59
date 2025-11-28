@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
+
+const url = import.meta.env.VITE_BACKEND_URL;
 
 export const PetCard = ({ pet }) => {
+    const { store, dispatch } = useGlobalReducer();
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const imageURL = pet.image;
+
+    useEffect(() => {
+        setIsFavorite(store.favorites.includes(pet.id));
+    }, [store.favorites, pet.id]);
 
     const getSexIcon = () => {
         if (pet.sex === 'Macho') {
@@ -36,6 +46,53 @@ export const PetCard = ({ pet }) => {
         }
     };
 
+    const handleFavoriteClick = async () => {
+        if (!store.token) {
+            alert("Debes iniciar sesión para agregar mascotas a favoritos");
+            return;
+        }
+
+        if (isProcessing) return;
+
+        setIsProcessing(true);
+
+        try {
+            if (isFavorite) {
+                const response = await fetch(`${url}/api/favorites/${pet.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${store.token}`
+                    }
+                });
+
+                if (response.ok) {
+                    dispatch({ type: 'REMOVE_FAVORITE', payload: pet.id });
+                } else {
+                    console.error("Error al eliminar de favoritos");
+                }
+            } else {
+                const response = await fetch(`${url}/api/favorites/${pet.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${store.token}`
+                    }
+                });
+
+                if (response.ok) {
+                    dispatch({ type: 'ADD_FAVORITE', payload: pet.id });
+                } else if (response.status === 409) {
+                    dispatch({ type: 'ADD_FAVORITE', payload: pet.id });
+                } else {
+                    console.error("Error al agregar a favoritos");
+                }
+            }
+        } catch (error) {
+            console.error("Error al actualizar favoritos:", error);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return (
         <div className="">
             <div className="d-flex justify-content-center">
@@ -48,7 +105,14 @@ export const PetCard = ({ pet }) => {
                         </div>
                         <h4>Edad: {calculateAge()}</h4>
                         <div className="d-flex justify-content-between mt-3 p-2">
-                            <button className="btn btn-danger" type="submit"><i className="fa-regular fa-heart"></i></button>
+                            <button
+                                className={isFavorite ? "btn btn-danger" : "btn btn-outline-danger"}
+                                type="button"
+                                onClick={handleFavoriteClick}
+                                disabled={isProcessing}
+                            >
+                                <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
+                            </button>
                             <Link to={`/pet/${pet.id}`} className="btn btn-light">Más sobre mi...</Link>
                         </div>
                     </div>
