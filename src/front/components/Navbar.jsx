@@ -39,6 +39,11 @@ export const Navbar = () => {
 						<Link to="/favorites" className="nav-text">
 							Favoritos
 						</Link>
+						{store.user?.role === 'Admin' && (
+							<Link to="/dashboard" className="nav-text">
+								Dashboard
+							</Link>
+						)}
 						{!store.token ? (
 							<>
 								<Link to="/login" className="nav-text">
@@ -87,6 +92,11 @@ export const Navbar = () => {
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/favorites')}>
 							Favoritos
 						</a>
+						{store.user?.role === 'Admin' && (
+							<a className="nav-text nav-link" onClick={() => handleNavClick('/dashboard')}>
+								Dashboard
+							</a>
+						)}
 						{!store.token ? (
 							<>
 								<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>

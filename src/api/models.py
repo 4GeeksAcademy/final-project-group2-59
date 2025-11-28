@@ -1,42 +1,42 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-import enum
+from enum import Enum
 from datetime import datetime, timezone
 
 
 db = SQLAlchemy()
 
 
-class genderUserEnum(enum.Enum):
+class genderUserEnum(Enum):
     MASCULINO = "Masculino"
     FEMENINO = "Femenino"
     OTRO = "Otro"
 
 
-class statusUserEnum(enum.Enum):
+class statusUserEnum(Enum):
     ACTIVE = "Activo"
     INACTIVE = "Inactivo"
     BANNED = "Baneado"
 
 
-class roleUserEnum(enum.Enum):
+class roleUserEnum(Enum):
     ADMIN = "Admin"
     USER = "Usuario"
 
 
-class speciesPetEnum(enum.Enum):
+class speciesPetEnum(Enum):
     DOG = "Perro"
     CAT = "Gato"
     OTHER = "Otro"
 
 
-class sexPetEnum(enum.Enum):
+class sexPetEnum(Enum):
     MALE = "Macho"
     FEMALE = "Hembra"
 
 
-class statusPetEnum(enum.Enum):
+class statusPetEnum(Enum):
     ADOPTED = "Adoptado"
     LOOKING_FOR_FAMILY = "Buscando Familia"
 
@@ -106,14 +106,15 @@ class Pet(db.Model):
         return f"<Pet {self.name}>"
 
     def serialize(self):
+        print(str(self.species.value), "SERIALIZE PET")
         return {
             "id": self.id,
             "name": self.name,
             "birthdate": self.birthdate.isoformat(),
-            "species": self.species.value,
+            # "species": self.species,
             "breed": self.breed,
-            "sex": self.sex.value,
-            "status": self.status.value,
+            # "sex": self.sex.value,
+            # "status": self.status.value,
             "created_at": self.created_at.isoformat(),
             "description": self.description,
             "image": self.image
