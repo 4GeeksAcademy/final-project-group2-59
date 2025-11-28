@@ -43,6 +43,9 @@ export const Navbar = () => {
 						<Link to="/register" className="nav-text">
 							Registrarse
 						</Link>
+						<Link to="/profile" className="nav-text">
+							Editar Perfil
+						</Link>
 					</div>
 
 					<button
@@ -81,6 +84,9 @@ export const Navbar = () => {
 						</a>
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/register')}>
 							Registrarse
+						</a>
+						<a className="nav-text nav-link" onClick={() => handleNavClick('/profile')}>
+							Editar Perfil
 						</a>
 					</div>
 				</div>
