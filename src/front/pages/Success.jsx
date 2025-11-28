@@ -5,7 +5,6 @@ import { Spinner } from "../components/Spinner.jsx";
 
 
 
-
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
 export default function Success() {

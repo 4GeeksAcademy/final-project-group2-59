@@ -1,0 +1,70 @@
+:root {
+  --color-principal: #e78951;
+  --color-btn: #e89d72;
+  --color-secundario: #376c73;
+  --color-fondo: #fefae0;
+  --color-texto: #222;
+}
+
+.custom-footer {
+  background-color: var(--color-secundario);
+  color: var(--color-fondo);
+}
+
+.footer-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: var(--color-principal);
+}
+
+.footer-text {
+  color: var(--color-fondo);
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Subtítulos */
+.footer-subtitle {
+  font-weight: bold;
+  color: var(--color-principal);
+  margin-bottom: 12px;
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--color-fondo);
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--color-btn);
+}
+
+/* Redes */
+.footer-social a {
+  font-size: 1.8rem;
+  margin-right: 12px;
+  color: var(--color-fondo);
+  transition: 0.3s;
+}
+
+.footer-social a:hover {
+  color: var(--color-principal);
+}
+
+/* Copyright */
+.footer-copy {
+  color: var(--color-fondo);
+  font-size: 0.95rem;
+}

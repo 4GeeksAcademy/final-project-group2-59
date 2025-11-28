@@ -45,7 +45,7 @@
   color: #376c73;
   font-family: "Baloo Chettan 2", cursive;
   font-size: 29px;
- 
+
   font-weight: 1000;
   text-transform: uppercase;
   letter-spacing: -1px;
@@ -82,4 +82,38 @@
 
 .btn-donations:active {
   transform: scale(0.98);
+}
+
+.dog-card {
+  width: 260px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.rotate-1 {
+  transform: rotate(-3deg);
+}
+.rotate-2 {
+  transform: rotate(1deg);
+}
+.rotate-3 {
+  transform: rotate(-2deg);
+}
+.rotate-4 {
+  transform: rotate(2deg);
+}
+
+.clavo {
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b3b;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.card-move {
+  transition: transform 0.25s ease;
+}
+
+.card-move:hover {
+  transform: translateY(-6px);
 }

@@ -5,7 +5,9 @@ import { RouterProvider } from "react-router-dom";  // Import RouterProvider to 
 import { router } from "./routes";  // Import the router configuration
 import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StoreProvider for global state management
 import { BackendURL } from './components/BackendURL';
-import "./styles/pages/style.css";
+import "./styles/pages/index.css";
+
+
 
 const Main = () => {
 

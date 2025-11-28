@@ -6,7 +6,6 @@ export default function DonationVoucher({ donation }) {
             <div className="card shadow-lg border-0" style={{ maxWidth: "480px", borderRadius: "20px" }}>
                 <div className="card-body p-4">
 
-                    {/* Header */}
                     <div className="text-center mb-4">
                         <div
                             className="bg-success text-white rounded-circle d-flex justify-content-center align-items-center"
@@ -26,7 +25,6 @@ export default function DonationVoucher({ donation }) {
 
                     <hr />
 
-                    {/* Datos */}
                     <div className="mb-2">
                         <p className="mb-1 fw-bold">Nombre:</p>
                         <p className="text-muted">{donation.name || "Anónimo"}</p>
