@@ -421,3 +421,12 @@ def change_password():
             return jsonify({"message": "Contraseña actualizada exitosamente"})
         except Exception as error:
             return jsonify({"message": f"Error al actualizar contraseña {error}"})
+        
+@api.route("/users", methods=["GET"])
+def users_info():
+
+    users = User.query.all()
+
+    users = list(map(lambda item: item.serialize(), users))
+
+    return jsonify(users), 200

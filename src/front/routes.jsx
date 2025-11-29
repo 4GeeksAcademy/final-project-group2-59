@@ -19,6 +19,7 @@ import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
 import { Protectedadmin } from "./components/Protectedadmin";
 import { Dashboard } from "./pages/Dashboard";
+import { Users } from "./pages/Users";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,7 +53,7 @@ export const router = createBrowserRouter(
       } />
       <Route path="/dashboard/users" element={
         <Protectedadmin>
-          <PetRegister />
+          <Users />
         </Protectedadmin>
       } />
     </Route>
