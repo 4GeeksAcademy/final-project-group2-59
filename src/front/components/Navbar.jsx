@@ -39,18 +39,6 @@ export const Navbar = () => {
 						<Link to="/favorites" className="nav-text">
 							Favoritos
 						</Link>
-						<Link to="/login" className="nav-text">
-							Ingresar
-						</Link>
-						<Link to="/register" className="nav-text">
-							Registrarse
-						</Link>
-						<Link to="/profile" className="nav-text">
-							Editar Perfil
-						</Link>
-					</div>
-
-					<button
 						{store.user?.role === 'Admin' && (
 							<Link to="/dashboard" className="nav-text">
 								Dashboard
@@ -66,26 +54,32 @@ export const Navbar = () => {
 								</Link>
 							</>
 						) : (
-							<Link to="/" className="nav-text" onClick={() => {
-								dispatch({ type: 'LOGOUT' });
-								localStorage.removeItem('user');
-							}}>
-								Cerrar Sesión
-							</Link>
+							<>
+								<Link to="/profile" className="nav-text">
+									Editar Perfil
+								</Link>
+								<Link to="/" className="nav-text" onClick={() => {
+									dispatch({ type: 'LOGOUT' });
+									localStorage.removeItem('user');
+								}}>
+									Cerrar Sesión
+								</Link>
+							</>
 						)}
-					</div>					<button
-						className="navbar-toggler d-md-none"
-						type="button"
-						data-bs-toggle="offcanvas"
-						data-bs-target="#offcanvasNavbar"
-						aria-controls="offcanvasNavbar"
-					>
-						<span className="navbar-toggler-icon"></span>
-					</button>
-				</div>
-			</nav>
 
-			<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+					</div>
+
+					<button className="offcanvas-toggle d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+						<i className="bi bi-list"></i>
+					</button>
+
+				</div>
+
+			</nav >
+
+
+
+			<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasNavbarLabel">
 				<div className="offcanvas-header">
 					<h5 className="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
 					<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -104,15 +98,6 @@ export const Navbar = () => {
 						<a className="nav-text nav-link" onClick={() => handleNavClick('/favorites')}>
 							Favoritos
 						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/login')}>
-							Ingresar
-						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/register')}>
-							Registrarse
-						</a>
-						<a className="nav-text nav-link" onClick={() => handleNavClick('/profile')}>
-							Editar Perfil
-						</a>
 						{store.user?.role === 'Admin' && (
 							<a className="nav-text nav-link" onClick={() => handleNavClick('/dashboard')}>
 								Dashboard
@@ -128,13 +113,18 @@ export const Navbar = () => {
 								</a>
 							</>
 						) : (
-							<a className="nav-text nav-link" onClick={() => {
-								dispatch({ type: 'LOGOUT' });
-								localStorage.removeItem('user');
-								handleNavClick('/');
-							}}>
-								Cerrar Sesión
-							</a>
+							<>
+								<a className="nav-text nav-link" onClick={() => handleNavClick('/profile')}>
+									Editar Perfil
+								</a>
+								<a className="nav-text nav-link" onClick={() => {
+									dispatch({ type: 'LOGOUT' });
+									localStorage.removeItem('user');
+									handleNavClick('/');
+								}}>
+									Cerrar Sesión
+								</a>
+							</>
 						)}
 					</div>
 				</div>

@@ -161,7 +161,7 @@ def get_pet(pet_id):
     return jsonify(pet.serialize()), 200
 
 
-@api.route('/pet', methods=["POST"])
+@api.route('/petregister', methods=["POST"])
 def pet_register():
     try:
         data_form = request.form
