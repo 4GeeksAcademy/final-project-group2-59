@@ -22,3 +22,25 @@
   font-family: "Pathway Gothic One", sans-serif;
   font-size: 30px;
 }
+
+.offcanvas-toggle {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+
+
+.offcanvas-toggle i {
+  font-size: 28px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+

@@ -111,10 +111,10 @@ class Pet(db.Model):
             "id": self.id,
             "name": self.name,
             "birthdate": self.birthdate.isoformat(),
-            # "species": self.species,
+            "species": self.species.value,
             "breed": self.breed,
-            # "sex": self.sex.value,
-            # "status": self.status.value,
+            "sex": self.sex.value,
+            "status": self.status.value,
             "created_at": self.created_at.isoformat(),
             "description": self.description,
             "image": self.image

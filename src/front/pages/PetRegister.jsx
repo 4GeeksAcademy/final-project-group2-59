@@ -63,7 +63,7 @@ export const PetRegister = () => {
                 setPet(initialPet);
                 fileInputRef.current.value = null;
                 setTimeout(() => {
-                    navigate("/pets");
+                    navigate("/dashboard");
                 }, 2000);
                 toast.success("Mascota registrada con éxito.");
             }
