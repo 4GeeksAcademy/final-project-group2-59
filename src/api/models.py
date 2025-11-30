@@ -87,13 +87,13 @@ class Pet(db.Model):
     birthdate: Mapped[datetime] = mapped_column(
         db.DateTime(timezone=True), nullable=False)
     species: Mapped[speciesPetEnum] = mapped_column(
-        db.Enum(speciesPetEnum), nullable=False)
+        db.Enum(speciesPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     breed: Mapped[str] = mapped_column(
         String(100), nullable=True, default="Mestizo")
     sex: Mapped[sexPetEnum] = mapped_column(
-        db.Enum(sexPetEnum), nullable=False)
+        db.Enum(sexPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     status: Mapped[statusPetEnum] = mapped_column(
-        db.Enum(statusPetEnum), nullable=False)
+        db.Enum(statusPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
     description: Mapped[str] = mapped_column(String(500), nullable=True)
@@ -106,7 +106,6 @@ class Pet(db.Model):
         return f"<Pet {self.name}>"
 
     def serialize(self):
-        print(str(self.species.value), "SERIALIZE PET")
         return {
             "id": self.id,
             "name": self.name,

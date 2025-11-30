@@ -38,20 +38,24 @@ export const PetRegister = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // Validación de campos requeridos
+        if (!pet.petname || !pet.species || !pet.sex || !pet.birthdate) {
+            toast.error("Por favor completa todos los campos obligatorios.");
+            return;
+        }
+
         const formData = new FormData();
 
-
         formData.append("petname", pet.petname);
-        console.log(pet.petname)
         formData.append("species", pet.species);
-        formData.append("breed", pet.breed);
+        formData.append("breed", pet.breed || "Mestizo");
         formData.append("sex", pet.sex);
         formData.append("birthdate", pet.birthdate);
-        formData.append("image", pet.image);
-        formData.append("description", pet.description);
-        for (let [key, value] of formData.entries()) {
-            console.log(key, value);
+        if (pet.image) {
+            formData.append("image", pet.image);
         }
+        formData.append("description", pet.description || "");
 
         try {
             const response = await fetch(`${url}/api/petregister`, {
@@ -59,15 +63,22 @@ export const PetRegister = () => {
                 body: formData
             });
 
+            const data = await response.json();
+
             if (response.ok) {
+                toast.success("Mascota registrada con éxito.");
                 setPet(initialPet);
-                fileInputRef.current.value = null;
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = null;
+                }
                 setTimeout(() => {
                     navigate("/dashboard");
                 }, 2000);
-                toast.success("Mascota registrada con éxito.");
+            } else {
+                toast.error(data.message || "Error al registrar la mascota.");
             }
         } catch (error) {
+            console.error("Error:", error);
             toast.error("Error inesperado, intente de nuevo más tarde.");
         }
     };
@@ -83,7 +94,7 @@ export const PetRegister = () => {
                             <div className="row">
                                 <div className="col-12 col-md-6">
                                     <div className="form-group mb-3">
-                                        <label htmlFor="forPetName" className="form-label">Nombre</label>
+                                        <label htmlFor="forPetName" className="form-label">Nombre <span className="text-danger">*</span></label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -92,16 +103,18 @@ export const PetRegister = () => {
                                             name="petname"
                                             onChange={handleChange}
                                             value={pet.petname}
+                                            required
                                         />
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label htmlFor="forSpecies" className="form-label">Especie</label>
+                                        <label htmlFor="forSpecies" className="form-label">Especie <span className="text-danger">*</span></label>
                                         <select
                                             onChange={handleChange}
                                             value={pet.species}
                                             className="form-control"
                                             name="species"
                                             id="forSpecies"
+                                            required
                                         >
                                             <option value="">Elige...</option>
                                             <option value="DOG">Perro</option>
@@ -125,13 +138,14 @@ export const PetRegister = () => {
                                 </div>
                                 <div className="col-12 col-md-6">
                                     <div className="form-group mb-3">
-                                        <label htmlFor="forSex" className="form-label">Sexo</label>
+                                        <label htmlFor="forSex" className="form-label">Sexo <span className="text-danger">*</span></label>
                                         <select
                                             className="form-control"
                                             name="sex"
                                             id="forSex"
                                             onChange={handleChange}
                                             value={pet.sex}
+                                            required
                                         >
                                             <option value="">Elige...</option>
                                             <option value="MALE">Macho</option>
@@ -139,7 +153,7 @@ export const PetRegister = () => {
                                         </select>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label htmlFor="forBirthdate" className="form-label">Fecha de Nacimiento</label>
+                                        <label htmlFor="forBirthdate" className="form-label">Fecha de Nacimiento <span className="text-danger">*</span></label>
                                         <input
                                             type="date"
                                             className="form-control"
@@ -147,6 +161,7 @@ export const PetRegister = () => {
                                             name="birthdate"
                                             onChange={handleChange}
                                             value={pet.birthdate}
+                                            required
                                         />
                                     </div>
                                     <div className="form-group mb-3">
