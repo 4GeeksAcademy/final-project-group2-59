@@ -166,44 +166,58 @@ def pet_register():
     try:
         data_form = request.form
         data_files = request.files
+        if not data_form.get("petname") or not data_form.get("species") or not data_form.get("sex") or not data_form.get("birthdate"):
+            return jsonify({"message": "Missing required fields"}), 400
 
-        data = {
-            "name": data_form.get("petname"),
-            "birthdate": data_form.get("birthdate"),
-            "species": data_form.get("species"),
-            "breed": data_form.get("breed"),
-            "sex": data_form.get("sex"),
-            "description": data_form.get("description"),
-            "image_db": data_files.get("image")
-        }
+        name = data_form.get("petname")
+        birthdate_str = data_form.get("birthdate")
+        species_str = data_form.get("species")
+        sex_str = data_form.get("sex")
+        breed = data_form.get("breed") or "Mestizo"
+        description = data_form.get("description") or ""
+        image_db = data_files.get("image")
+        birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
+        species_map = {"DOG": speciesPetEnum.DOG,
+                       "CAT": speciesPetEnum.CAT, "OTHER": speciesPetEnum.OTHER}
+        sex_map = {"MALE": sexPetEnum.MALE, "FEMALE": sexPetEnum.FEMALE}
 
-        print(data)
+        species = species_map.get(species_str)
+        sex = sex_map.get(sex_str)
+
+        if not species or not sex:
+            return jsonify({"message": f"Invalid species '{species_str}' or sex '{sex_str}' value"}), 400
 
         image = ""
-
-        if data.get("image_db") is not None:
-            image = uploader.upload(data.get("image_db"))
-            image = image["secure_url"]
+        if image_db is not None:
+            try:
+                result = uploader.upload(image_db)
+                image = result["secure_url"]
+            except Exception as e:
+                print(f"Error uploading image: {e}")
 
         new_pet = Pet(
-            name=data["name"],
-            birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d").date(),
-            species=data["species"],
-            breed=data["breed"],
-            sex=data["sex"],
-            status="LOOKING_FOR_FAMILY",
-            description=data["description"],
-            image=image,
+            name=name,
+            birthdate=birthdate,
+            species=species,
+            breed=breed,
+            sex=sex,
+            status=statusPetEnum.LOOKING_FOR_FAMILY,
+            description=description,
+            image=image
         )
 
         db.session.add(new_pet)
-
         db.session.commit()
-        return jsonify({"message": "Pet created successfully"}), 201
-    except Exception as error:
-        print(error.args)
+
+        return jsonify({"message": "Pet created successfully", "pet": new_pet.serialize()}), 201
+
+    except ValueError as e:
         db.session.rollback()
-        return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
+        return jsonify({"message": "Invalid date format or enum value", "error": str(e)}), 400
+    except Exception as error:
+        print(f"Error creating pet: {error}")
+        db.session.rollback()
+        return jsonify({"message": "Error creating pet", "Error": str(error)}), 500
 
 
 @api.route('/pet/<int:pet_id>', methods=['DELETE'])
@@ -223,14 +237,12 @@ def delete_pet(pet_id):
 def update_pet(pet_id):
     try:
         pet = Pet.query.get(pet_id)
-
         if not pet:
             return jsonify({"message": "Pet not found"}), 404
 
         data_form = request.form
         data_files = request.files
         print(data_form, "DATA FORM")
-        
 
         if data_form.get("name"):
             pet.name = data_form.get("name")
@@ -240,37 +252,62 @@ def update_pet(pet_id):
                 data_form.get("birthdate"), "%Y-%m-%d").date()
 
         if data_form.get("species"):
-            pet.species = data_form.get("species")
-        
-
-        print(pet.serialize(), "UPDATED PET")
+            species_map = {"DOG": speciesPetEnum.DOG,
+                           "CAT": speciesPetEnum.CAT, "OTHER": speciesPetEnum.OTHER}
+            species_str = data_form.get("species")
+            species = species_map.get(species_str)
+            if species:
+                pet.species = species
+            else:
+                return jsonify({"message": f"Invalid species value: {species_str}"}), 400
 
         if data_form.get("breed"):
             pet.breed = data_form.get("breed")
 
         if data_form.get("sex"):
-            pet.sex = data_form.get("sex")
+            sex_map = {"MALE": sexPetEnum.MALE, "FEMALE": sexPetEnum.FEMALE}
+            sex_str = data_form.get("sex")
+            sex = sex_map.get(sex_str)
+            if sex:
+                pet.sex = sex
+            else:
+                return jsonify({"message": f"Invalid sex value: {sex_str}"}), 400
 
         if data_form.get("description"):
             pet.description = data_form.get("description")
 
         if data_form.get("status"):
-            pet.status = data_form.get("status")
-        
+            status_map = {
+                "ADOPTED": statusPetEnum.ADOPTED,
+                "LOOKING_FOR_FAMILY": statusPetEnum.LOOKING_FOR_FAMILY
+            }
+            status_str = data_form.get("status")
+            status = status_map.get(status_str)
+            if status:
+                pet.status = status
+            else:
+                return jsonify({"message": f"Invalid status value: {status_str}"}), 400
 
         image_db = data_files.get("image")
         if image_db is not None:
-            image = uploader.upload(image_db)
-            pet.image = image["secure_url"]
+            try:
+                image = uploader.upload(image_db)
+                pet.image = image["secure_url"]
+            except Exception as e:
+                print(f"Error uploading image: {e}")
 
-        
         db.session.commit()
+        print(pet.serialize(), "UPDATED PET")
+
         return jsonify({"message": "Pet updated successfully", "pet": pet.serialize()}), 200
 
-    except Exception as error:
-        print(error.args)
+    except ValueError as e:
         db.session.rollback()
-        return jsonify({"message": "Error updating pet", "error": f"{error.args}"}), 500
+        return jsonify({"message": "Invalid date format or enum value", "error": str(e)}), 400
+    except Exception as error:
+        print(f"Error updating pet: {error}")
+        db.session.rollback()
+        return jsonify({"message": "Error updating pet", "error": str(error)}), 500
 
 
 @api.route('/donations/create-paypal-order', methods=['POST'])

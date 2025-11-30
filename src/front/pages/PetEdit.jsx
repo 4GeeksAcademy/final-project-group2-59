@@ -30,11 +30,23 @@ export const PetEdit = () => {
                 if (response.ok) {
                     const data = await response.json();
                     console.log("Datos recibidos de la API:", data);
+
+                    const speciesMap = {
+                        "Perro": "DOG",
+                        "Gato": "CAT",
+                        "Otro": "OTHER"
+                    };
+
+                    const sexMap = {
+                        "Macho": "MALE",
+                        "Hembra": "FEMALE"
+                    };
+
                     setPet({
                         name: data.name || "",
-                        species: data.species || "",
+                        species: speciesMap[data.species] || data.species || "",
                         breed: data.breed || "",
-                        sex: data.sex || "",
+                        sex: sexMap[data.sex] || data.sex || "",
                         birthdate: data.birthdate ? data.birthdate.split('T')[0] : "",
                         image: null,
                         description: data.description || ""
