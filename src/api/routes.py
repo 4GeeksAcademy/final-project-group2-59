@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Pet, Favorite, Bills, Donation
+from api.models import db, User, Pet, Favorite, Bills, Donation, sexPetEnum, speciesPetEnum, statusPetEnum
 from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success
 from flask_cors import CORS
 from base64 import b64encode
@@ -67,13 +67,12 @@ def register():
     avatar = "https://i.pravatar.cc/300"
 
     if avatar_db is not None:
-        avatar = uploader.upload(avatar)
+        avatar = uploader.upload(avatar_db)
         avatar = avatar["secure_url"]
 
     rol = "USER"
     if email == "patitasfelicess123@gmail.com":
         rol = "ADMIN"
-    
 
     new_user = User(
         email=email,
@@ -82,7 +81,7 @@ def register():
         gender=gender,
         avatar=avatar,
         password=password,
-        role= rol,
+        role=rol,
         status="ACTIVE",
         salt=salt
     )
@@ -167,44 +166,148 @@ def pet_register():
     try:
         data_form = request.form
         data_files = request.files
+        if not data_form.get("petname") or not data_form.get("species") or not data_form.get("sex") or not data_form.get("birthdate"):
+            return jsonify({"message": "Missing required fields"}), 400
 
-        data = {
-            "name": data_form.get("petname"),
-            "birthdate": data_form.get("birthdate"),
-            "species": data_form.get("species"),
-            "breed": data_form.get("breed"),
-            "sex": data_form.get("sex"),
-            "description": data_form.get("description"),
-            "image_db": data_files.get("image")
-        }
+        name = data_form.get("petname")
+        birthdate_str = data_form.get("birthdate")
+        species_str = data_form.get("species")
+        sex_str = data_form.get("sex")
+        breed = data_form.get("breed") or "Mestizo"
+        description = data_form.get("description") or ""
+        image_db = data_files.get("image")
+        birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
+        species_map = {"DOG": speciesPetEnum.DOG,
+                       "CAT": speciesPetEnum.CAT, "OTHER": speciesPetEnum.OTHER}
+        sex_map = {"MALE": sexPetEnum.MALE, "FEMALE": sexPetEnum.FEMALE}
 
-        print(data)
+        species = species_map.get(species_str)
+        sex = sex_map.get(sex_str)
+
+        if not species or not sex:
+            return jsonify({"message": f"Invalid species '{species_str}' or sex '{sex_str}' value"}), 400
 
         image = ""
-
-        if data.get("image_db") is not None:
-            image = uploader.upload(data.get("image_db"))
-            image = image["secure_url"]
+        if image_db is not None:
+            try:
+                result = uploader.upload(image_db)
+                image = result["secure_url"]
+            except Exception as e:
+                print(f"Error uploading image: {e}")
 
         new_pet = Pet(
-            name=data["name"],
-            birthdate=datetime.strptime(data["birthdate"], "%Y-%m-%d").date(),
-            species=data["species"],
-            breed=data["breed"],
-            sex=data["sex"],
-            status="LOOKING_FOR_FAMILY",
-            description=data["description"],
-            image=image,
+            name=name,
+            birthdate=birthdate,
+            species=species,
+            breed=breed,
+            sex=sex,
+            status=statusPetEnum.LOOKING_FOR_FAMILY,
+            description=description,
+            image=image
         )
 
         db.session.add(new_pet)
+        db.session.commit()
+
+        return jsonify({"message": "Pet created successfully", "pet": new_pet.serialize()}), 201
+
+    except ValueError as e:
+        db.session.rollback()
+        return jsonify({"message": "Invalid date format or enum value", "error": str(e)}), 400
+    except Exception as error:
+        print(f"Error creating pet: {error}")
+        db.session.rollback()
+        return jsonify({"message": "Error creating pet", "Error": str(error)}), 500
+
+
+@api.route('/pet/<int:pet_id>', methods=['DELETE'])
+def delete_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+
+    if not pet:
+        return jsonify({"message": "Pet not found"}), 404
+
+    db.session.delete(pet)
+    db.session.commit()
+
+    return jsonify({"message": "Pet deleted successfully"}), 200
+
+
+@api.route('/pet/<int:pet_id>', methods=['PUT'])
+def update_pet(pet_id):
+    try:
+        pet = Pet.query.get(pet_id)
+        if not pet:
+            return jsonify({"message": "Pet not found"}), 404
+
+        data_form = request.form
+        data_files = request.files
+        print(data_form, "DATA FORM")
+
+        if data_form.get("name"):
+            pet.name = data_form.get("name")
+
+        if data_form.get("birthdate"):
+            pet.birthdate = datetime.strptime(
+                data_form.get("birthdate"), "%Y-%m-%d").date()
+
+        if data_form.get("species"):
+            species_map = {"DOG": speciesPetEnum.DOG,
+                           "CAT": speciesPetEnum.CAT, "OTHER": speciesPetEnum.OTHER}
+            species_str = data_form.get("species")
+            species = species_map.get(species_str)
+            if species:
+                pet.species = species
+            else:
+                return jsonify({"message": f"Invalid species value: {species_str}"}), 400
+
+        if data_form.get("breed"):
+            pet.breed = data_form.get("breed")
+
+        if data_form.get("sex"):
+            sex_map = {"MALE": sexPetEnum.MALE, "FEMALE": sexPetEnum.FEMALE}
+            sex_str = data_form.get("sex")
+            sex = sex_map.get(sex_str)
+            if sex:
+                pet.sex = sex
+            else:
+                return jsonify({"message": f"Invalid sex value: {sex_str}"}), 400
+
+        if data_form.get("description"):
+            pet.description = data_form.get("description")
+
+        if data_form.get("status"):
+            status_map = {
+                "ADOPTED": statusPetEnum.ADOPTED,
+                "LOOKING_FOR_FAMILY": statusPetEnum.LOOKING_FOR_FAMILY
+            }
+            status_str = data_form.get("status")
+            status = status_map.get(status_str)
+            if status:
+                pet.status = status
+            else:
+                return jsonify({"message": f"Invalid status value: {status_str}"}), 400
+
+        image_db = data_files.get("image")
+        if image_db is not None:
+            try:
+                image = uploader.upload(image_db)
+                pet.image = image["secure_url"]
+            except Exception as e:
+                print(f"Error uploading image: {e}")
 
         db.session.commit()
-        return jsonify({"message": "Pet created successfully"}), 201
-    except Exception as error:
-        print(error.args)
+        print(pet.serialize(), "UPDATED PET")
+
+        return jsonify({"message": "Pet updated successfully", "pet": pet.serialize()}), 200
+
+    except ValueError as e:
         db.session.rollback()
-        return jsonify({"message": "Error creating pet", "Error": f"{error.args}"}), 500
+        return jsonify({"message": "Invalid date format or enum value", "error": str(e)}), 400
+    except Exception as error:
+        print(f"Error updating pet: {error}")
+        db.session.rollback()
+        return jsonify({"message": "Error updating pet", "error": str(error)}), 500
 
 
 @api.route('/donations/create-paypal-order', methods=['POST'])
@@ -366,14 +469,14 @@ def remove_favorite(pet_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({"message": "Error removing from favorites", "error": str(error)}), 500
-    
 
-    
+
 @api.route("send-mail-reset-password", methods=["POST"])
 def send_mail_reset_password():
     data = request.get_json()
 
-    token = create_access_token(identity=str(data.get("email")), expires_delta=timedelta(minutes=20))
+    token = create_access_token(identity=str(
+        data.get("email")), expires_delta=timedelta(minutes=20))
 
     html = f"""
 
@@ -399,7 +502,8 @@ def send_mail_reset_password():
             return jsonify({"message": "Intente mas tarde"}), 400
     except Exception as error:
         return jsonify({"message": f"Ocurrio un error inesperado{error}"}), 500
-    
+
+
 @api.route("/change-password", methods=["PUT"])
 @jwt_required()
 def change_password():
@@ -407,7 +511,7 @@ def change_password():
     email = get_jwt_identity()
     password = request.get_json()
 
-    user = User.query.filter_by(email = email).one_or_none()
+    user = User.query.filter_by(email=email).one_or_none()
 
     if user is not None:
         salt = b64encode(os.urandom(32)).decode("utf-8")
@@ -430,3 +534,9 @@ def users_info():
     users = list(map(lambda item: item.serialize(), users))
 
     return jsonify(users), 200
+
+@api.route("/user/<int:user_id>", methods=["PUT"])
+@jwt_required()
+def change_user(user_id):
+
+    return jsonify("hola")

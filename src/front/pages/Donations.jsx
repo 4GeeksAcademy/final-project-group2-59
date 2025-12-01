@@ -1,12 +1,31 @@
 import React, { useState, useRef } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import "../../front/styles/pages/donations.css";
+import { DogCard } from "../components/DonationCard.jsx";
 
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
 export const Donations = () => {
     const formRef = useRef(null);
     const { store, dispatch } = useGlobalReducer();
+
+    const dogCardsColumn = [
+        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg" },
+        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg" },
+    ];
+
+    const dogCardsColumn2 = [
+        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg" },
+        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg" },
+    ];
+
+    const dogCardsColumn3 = [
+        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg" },
+        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg" },
+    ];
+
+    const cardText = "Roco necesita alimento especial por una alergia.";
+
 
     const [form, setForm] = useState({
         name: "",
@@ -66,61 +85,100 @@ export const Donations = () => {
 
 
     return (
-        <div className="donations-bg d-flex align-items-center justify-content-end">
-            <div className="card card-donations bg-white p-4 rounded shadow  me-md-5">
-                <div className="card-body">
-                    <h5 className="card-title text-center mb-3">Donar</h5>
+        <div className="container">
+            <div className="row">
+                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                    {dogCardsColumn.map((c, i) => (
+                        <DogCard
+                            key={i}
+                            rotate={c.rotate}
+                            img={c.img}
+                            text={cardText}
+                        />
+                    ))}
 
-                    <form ref={formRef} onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Nombre completo</label>
-                            <input
-                                name="name"
-                                type="text"
-                                className="form-control"
-                                onChange={handleChange}
-                                value={form.name}
-                            />
+                </div>
+                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                    {dogCardsColumn2.map((c, i) => (
+                        <DogCard
+                            key={i}
+                            rotate={c.rotate}
+                            img={c.img}
+                            text={cardText}
+                        />
+                    ))}
+
+
+                </div>
+                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                    {dogCardsColumn3.map((c, i) => (
+                        <DogCard
+                            key={i}
+                            rotate={c.rotate}
+                            img={c.img}
+                            text={cardText}
+                        />
+                    ))}
+
+
+                </div>
+                <div className="col-5 d-flex justify-content-end">
+                    <div className="card card-donations bg-white p-4 rounded shadow mt-5">
+                        <div className="card-body">
+                            <h5 className="logo-text text-center">Donar</h5>
+
+                            <form ref={formRef} onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label className="form-label">Nombre completo</label>
+                                    <input
+                                        name="name"
+                                        type="text"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        value={store.user?.full_name || form.name}
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label">Correo electrónico</label>
+                                    <input
+                                        name="email"
+                                        type="email"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        value={store.user?.email || form.email}
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label">Monto USD</label>
+                                    <input
+                                        name="amount"
+                                        type="number"
+                                        className="form-control"
+                                        required
+                                        onChange={handleChange}
+                                        value={form.amount}
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label">Mensaje (opcional)</label>
+                                    <textarea
+                                        name="message"
+                                        rows="3"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        value={form.message}
+                                    ></textarea>
+                                </div>
+
+                                <button type="submit" className="btn btn-donations w-100">
+                                    Donar ahora
+                                </button>
+                            </form>
                         </div>
-
-                        <div className="mb-3">
-                            <label className="form-label">Correo electrónico</label>
-                            <input
-                                name="email"
-                                type="email"
-                                className="form-control"
-                                onChange={handleChange}
-                                value={form.email}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <label className="form-label">Monto USD</label>
-                            <input
-                                name="amount"
-                                type="number"
-                                className="form-control"
-                                required
-                                onChange={handleChange}
-                                value={form.amount}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <label className="form-label">Mensaje (opcional)</label>
-                            <textarea
-                                name="message"
-                                rows="3"
-                                className="form-control"
-                                onChange={handleChange}
-                                value={form.message}
-                            ></textarea>
-                        </div>
-
-                        <button type="submit" className="btn btn-donations w-100">
-                            Donar ahora
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

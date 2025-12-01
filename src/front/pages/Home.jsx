@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/home.css";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import perroimg from "./img/perritos-about.jpg";
 
 
 export const HomeAndAbout = () => {

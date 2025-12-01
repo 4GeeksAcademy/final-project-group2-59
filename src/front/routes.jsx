@@ -12,14 +12,18 @@ import { Donations } from "./pages/Donations"
 import { Register } from "./pages/Register";
 import Success from "./pages/Success";
 import { PetRegister } from "./pages/PetRegister";
-import { Login } from "./pages/Login";
+import { Login } from "./pages/Login"
 import { Pets } from "./pages/Pets";
 import { Pet } from "./pages/Pet";
+import { Profile } from "./pages/Profile";
 import { Favorites } from "./pages/Favorites";
 import { HomeAndAbout } from "./pages/Home";
 import { Protectedadmin } from "./components/Protectedadmin";
 import { Dashboard } from "./pages/Dashboard";
 import { Users } from "./pages/Users";
+import { PetManagent } from "./pages/PetManagent";
+import { PetEdit } from "./pages/PetEdit";
+import { UserEdit } from "./pages/UserEdit";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +44,7 @@ export const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/dashboard" element={
         <Protectedadmin>
@@ -56,7 +61,23 @@ export const router = createBrowserRouter(
           <Users />
         </Protectedadmin>
       } />
+      <Route path="/dashboard/users/user/:userId" element={
+        <Protectedadmin>
+          <UserEdit />
+        </Protectedadmin>
+      } />
+      <Route path="/dashboard/petmanagement" element={
+        <Protectedadmin>
+          <PetManagent />
+        </Protectedadmin>
+      } />
+      <Route path="/dashboard/petedit/:petId" element={
+        <Protectedadmin>
+          <PetEdit />
+        </Protectedadmin>
+      } />
     </Route>
+    
 
   )
 );

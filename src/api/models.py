@@ -1,42 +1,42 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-import enum
+from enum import Enum
 from datetime import datetime, timezone
 
 
 db = SQLAlchemy()
 
 
-class genderUserEnum(enum.Enum):
+class genderUserEnum(Enum):
     MASCULINO = "Masculino"
     FEMENINO = "Femenino"
     OTRO = "Otro"
 
 
-class statusUserEnum(enum.Enum):
+class statusUserEnum(Enum):
     ACTIVE = "Activo"
     INACTIVE = "Inactivo"
     BANNED = "Baneado"
 
 
-class roleUserEnum(enum.Enum):
+class roleUserEnum(Enum):
     ADMIN = "Admin"
     USER = "Usuario"
 
 
-class speciesPetEnum(enum.Enum):
+class speciesPetEnum(Enum):
     DOG = "Perro"
     CAT = "Gato"
     OTHER = "Otro"
 
 
-class sexPetEnum(enum.Enum):
+class sexPetEnum(Enum):
     MALE = "Macho"
     FEMALE = "Hembra"
 
 
-class statusPetEnum(enum.Enum):
+class statusPetEnum(Enum):
     ADOPTED = "Adoptado"
     LOOKING_FOR_FAMILY = "Buscando Familia"
 
@@ -87,13 +87,13 @@ class Pet(db.Model):
     birthdate: Mapped[datetime] = mapped_column(
         db.DateTime(timezone=True), nullable=False)
     species: Mapped[speciesPetEnum] = mapped_column(
-        db.Enum(speciesPetEnum), nullable=False)
+        db.Enum(speciesPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     breed: Mapped[str] = mapped_column(
         String(100), nullable=True, default="Mestizo")
     sex: Mapped[sexPetEnum] = mapped_column(
-        db.Enum(sexPetEnum), nullable=False)
+        db.Enum(sexPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     status: Mapped[statusPetEnum] = mapped_column(
-        db.Enum(statusPetEnum), nullable=False)
+        db.Enum(statusPetEnum, values_callable=lambda x: [e.value for e in x]), nullable=False)
     created_at: Mapped[datetime] = mapped_column(db.DateTime(
         timezone=True), default=datetime.now(timezone.utc), nullable=False)
     description: Mapped[str] = mapped_column(String(500), nullable=True)
