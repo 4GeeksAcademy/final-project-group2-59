@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import "../styles/pages/users.css"
+import { Spinner } from "../components/Spinner";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
 export const Users = () => {
 
     const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const getUsers = async () => {
         try {
@@ -19,43 +21,56 @@ export const Users = () => {
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
         getUsers()
-    })
+    }, [])
 
+    if (loading) {
+        return <Spinner />
+    }
 
 
     return (
         <div className="container">
-            <div className="row mt-4">
+            <div className="mt-4">
                 {
                     users.length == 0 ? (
-                            <h1 className="text-center">No hay usuarios registrados</h1>
+                        <h1 className="text-center">No hay usuarios registrados</h1>
                     ) : (
-                        <div className="row">
-                            <h1 className="text-center mb-4">Usuarios</h1>
-                            <div className="col-12 row mb-2">
-                                <p className="mb-0 col-4">Username</p>
-                                <p className="mb-0 me-5 col-3">Role</p>
-                                <p className="mb-0 ms-4 col-3">Status</p>
-                            </div>
-                            {
-                                users.map((user) => (
-                                    <div className="col-12 mb-4 bg-white border border-secondary rounded p-2 row" key={user.id}>
-                                        <p className="mb-0 col-4">{user.full_name}</p>
-                                        <p className="mb-0 me-5 col-3 bg-light border rounded">{user.role}</p>
-                                        <p className="mb-0 ms-4 col-3 bg-light border rounded">{user.status}</p>
-                                        <div className="col-1 users-edit">
-                                            <Link to={`user/${user.id}`}><i className="text-center bi bi-pencil-fill"></i></Link>
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                        <div>
+                            <h1 className="h1-users text-center mb-4">Usuarios</h1>
+                            <table className="table table-users table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        users.map((user) => (
+                                            <tr key={user.id}>
+                                                <td>{user.full_name}</td>
+                                                <td >{user.role}</td>
+                                                <td>{user.status}</td>
+                                                <td>
+                                                    <Link to={`user/${user.id}`} className="btn btn-sm link-underline">
+                                                        <i className="text-center bi bi-pencil-fill"></i>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
                         </div>
-
                     )
                 }
             </div>

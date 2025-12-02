@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import { Link } from "react-router-dom";
+import "../styles/pages/changePassword.css"
 
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -67,9 +68,9 @@ export const ChangePassword = () => {
 
         <div className="container">
             <Toaster position="top-center"/>
-            <div className="form-group">
-                <form className="bg-light p-5" onSubmit={handleSubmit}>
-                    <h1>Ingresa una contraseña nueva</h1>
+            <div className="form-group mt-5">
+                <form className="bg-light p-5 rounded-5" onSubmit={handleSubmit}>
+                    <h1 className="mb-4 h1-change-password">Ingresa una contraseña nueva</h1>
                     <div className="form-group mb-3">
                         <label htmlFor="forPassword">Contraseñas:</label>
                         <input
@@ -99,7 +100,7 @@ export const ChangePassword = () => {
                             <div className="text-danger mt-2">{error.confirm}</div>
                         )}
                     </div>
-                    <button className="btn">Confirmar</button>
+                    <button className="btn button-change-password">Confirmar</button>
                 </form>
             </div>
         </div>

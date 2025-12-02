@@ -522,9 +522,10 @@ def change_password():
 
         try:
             db.session.commit()
-            return jsonify({"message": "Contraseña actualizada exitosamente"})
+            return jsonify({"message": "Contraseña actualizada exitosamente"}), 200
         except Exception as error:
-            return jsonify({"message": f"Error al actualizar contraseña {error}"})
+            return jsonify({"message": f"Error al actualizar contraseña {error}"}), 400
+    
         
 @api.route("/users", methods=["GET"])
 def users_info():
@@ -536,7 +537,23 @@ def users_info():
     return jsonify(users), 200
 
 @api.route("/user/<int:user_id>", methods=["PUT"])
-@jwt_required()
 def change_user(user_id):
 
-    return jsonify("hola")
+    data = request.get_json()
+
+    role = data.get("role")
+    status = data.get("status")
+
+    user = User.query.get(user_id)
+
+    if user is not None:
+        user.role = role
+        user.status = status
+
+        try:
+            db.session.commit()
+            return jsonify({"message": "Usuario actualizado exitosamente"}), 200
+        except Exception as error:
+            return jsonify({"message": f"Error al actualizar el usuario: {error}"}), 500
+    else:
+        return jsonify({"message": "Ocurrio un error inesperado, intente mas tarde"}), 400

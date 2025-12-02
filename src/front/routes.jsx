@@ -24,6 +24,8 @@ import { Users } from "./pages/Users";
 import { PetManagent } from "./pages/PetManagent";
 import { PetEdit } from "./pages/PetEdit";
 import { UserEdit } from "./pages/UserEdit";
+import { SendMailToResetPassword } from "./pages/SendMailToResetPassword";
+import { ChangePassword } from "./pages/ChangePassword"
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +44,8 @@ export const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/success" element={<Success />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/send-mail-password" element={<SendMailToResetPassword />} />
+      <Route path="/change-password" element={<ChangePassword />} />
       <Route path="/pets" element={<Pets />} />
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/profile" element={<Profile />} />
@@ -77,7 +81,7 @@ export const router = createBrowserRouter(
         </Protectedadmin>
       } />
     </Route>
-    
+
 
   )
 );
