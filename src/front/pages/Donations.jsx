@@ -13,18 +13,18 @@ export const Donations = () => {
 
 
     const dogCardsColumn = [
-        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg" ,text: "Rocco necesita medicinas para su artritis." },
-        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg" ,text: "Misha necesita una cama cálida para los días fríos."},
+        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg", text: "Rocco necesita medicinas para su artritis." },
+        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg", text: "Misha necesita una cama cálida para los días fríos." },
     ];
 
     const dogCardsColumn2 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg" ,text: "Luna necesita vacunas para mantenerse saludable."},
-        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg" ,text: "Toby necesita juguetes para estimular su mente y energía."},
+        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg", text: "Luna necesita vacunas para mantenerse saludable." },
+        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg", text: "Toby necesita juguetes para estimular su mente y energía." },
     ];
 
     const dogCardsColumn3 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg" ,text: "Bella necesita transporte seguro para ir al veterinario."},
-        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg" ,text: "Simba necesita ropa especial por su piel sensible."},
+        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg", text: "Bella necesita transporte seguro para ir al veterinario." },
+        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg", text: "Simba necesita ropa especial por su piel sensible." },
     ];
 
 
@@ -102,11 +102,7 @@ export const Donations = () => {
                         <DogCard
                             key={i}
                             rotate={c.rotate}
-                            img={c.img}
-                            text={c.text}
-                        />
-                    ))}
-
+                            img={c.img} text={c.text} />))}
                 </div>
                 <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn2.map((c, i) => (
@@ -114,11 +110,7 @@ export const Donations = () => {
                             key={i}
                             rotate={c.rotate}
                             img={c.img}
-                            text={c.text}
-                        />
-                    ))}
-
-
+                            text={c.text} />))}
                 </div>
                 <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn3.map((c, i) => (
@@ -126,10 +118,7 @@ export const Donations = () => {
                             key={i}
                             rotate={c.rotate}
                             img={c.img}
-                            text={c.text}
-                        />
-                    ))}
-
+                            text={c.text} />))}
                 </div>
                 <div className="col-12 col-md-5 d-flex justify-content-center justify-content-md-end">
                     <div className="card card-donations bg-white p-4 rounded shadow mt-5">
