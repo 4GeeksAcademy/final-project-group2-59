@@ -1,5 +1,6 @@
 .profile-form {
   border-radius: 50px 50px 50px 50px !important;
+  max-width: 1000px;
 }
 .profile-title {
   color: #376c73;

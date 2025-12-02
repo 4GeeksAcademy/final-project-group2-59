@@ -2,29 +2,30 @@ import React, { useState, useRef } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import "../../front/styles/pages/donations.css";
 import { DogCard } from "../components/DonationCard.jsx";
+import { Spinner } from "../components/Spinner.jsx";
 
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
 export const Donations = () => {
     const formRef = useRef(null);
     const { store, dispatch } = useGlobalReducer();
+    const [showSpinner, setShowSpinner] = useState(false);
+
 
     const dogCardsColumn = [
-        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg" },
-        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg" },
+        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg" ,text: "Rocco necesita medicinas para su artritis." },
+        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg" ,text: "Misha necesita una cama cálida para los días fríos."},
     ];
 
     const dogCardsColumn2 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg" },
-        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg" },
+        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg" ,text: "Luna necesita vacunas para mantenerse saludable."},
+        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg" ,text: "Toby necesita juguetes para estimular su mente y energía."},
     ];
 
     const dogCardsColumn3 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg" },
-        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg" },
+        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg" ,text: "Bella necesita transporte seguro para ir al veterinario."},
+        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg" ,text: "Simba necesita ropa especial por su piel sensible."},
     ];
-
-    const cardText = "Roco necesita alimento especial por una alergia.";
 
 
     const [form, setForm] = useState({
@@ -47,7 +48,7 @@ export const Donations = () => {
         if (!formRef.current.reportValidity()) return;
 
         sessionStorage.setItem("donationForm", JSON.stringify(form));
-
+        setShowSpinner(true);
         createOrder();
     };
 
@@ -75,54 +76,62 @@ export const Donations = () => {
                 console.error("No llegó link de aprobación");
                 return;
             }
-
             window.location.href = approveLink.href;
+            setShowSpinner(false);
 
         } catch (error) {
             console.error("Error creando orden:", error);
         }
+
     };
 
 
     return (
-        <div className="container">
+        <div className="container d-flex justify-content-center">
+            {showSpinner && (
+                <div
+                    className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50"
+                    style={{ zIndex: 9999 }}
+                >
+                    <Spinner />
+                </div>
+            )}
             <div className="row">
-                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn.map((c, i) => (
                         <DogCard
                             key={i}
                             rotate={c.rotate}
                             img={c.img}
-                            text={cardText}
+                            text={c.text}
                         />
                     ))}
 
                 </div>
-                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn2.map((c, i) => (
                         <DogCard
                             key={i}
                             rotate={c.rotate}
                             img={c.img}
-                            text={cardText}
+                            text={c.text}
                         />
                     ))}
 
 
                 </div>
-                <div className="col-2 d-flex flex-column justify-content-center align-items-center mt-5 m-3">
+                <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn3.map((c, i) => (
                         <DogCard
                             key={i}
                             rotate={c.rotate}
                             img={c.img}
-                            text={cardText}
+                            text={c.text}
                         />
                     ))}
 
-
                 </div>
-                <div className="col-5 d-flex justify-content-end">
+                <div className="col-12 col-md-5 d-flex justify-content-center justify-content-md-end">
                     <div className="card card-donations bg-white p-4 rounded shadow mt-5">
                         <div className="card-body">
                             <h5 className="logo-text text-center">Donar</h5>
