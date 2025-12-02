@@ -6,20 +6,19 @@ import "../../front/styles/pages/profile.css";
 let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
 
 export const Profile = () => {
-    const { store, actions } = useGlobalReducer();
+    const { store, dispatch } = useGlobalReducer();
 
     const [localUser, setLocalUser] = useState({
         full_name: store.user?.full_name || "",
         email: store.user?.email || "",
         gender: store.user?.gender || "",
         birthdate: store.user?.birthdate ? store.user.birthdate.split("T")[0] : "",
-        id: store.user?.id || null,
     });
 
     const putUser = async (user) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${API_URL}/users/${user.id}`, {
+            const response = await fetch(`${API_URL}api/edit-user`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,17 +36,18 @@ export const Profile = () => {
             return null;
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedUser = await putUser(localUser);
+        const { full_name, email, birthdate } = localUser;
+        const updatedUser = await putUser({ full_name, email, birthdate });
         if (updatedUser) {
-            actions.setUser(updatedUser);
+            dispatch({ type: "SET_USER", payload: updatedUser });
             alert("Usuario actualizado correctamente");
         } else {
             alert("Error al actualizar usuario");
         }
     };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;

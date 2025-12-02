@@ -18,12 +18,7 @@ export const Navbar = () => {
 	};
 
 	return (
-		<># Asegúrate de estar en tu rama local con los commits
-git checkout profile
-
-# Crear de nuevo la rama remota
-git push -u origin profile
-
+		<>
 			<nav className="navbar">
 				<div className="container">
 					<Link to="/" className="d-flex align-items-center logo-text navbar-brand">
