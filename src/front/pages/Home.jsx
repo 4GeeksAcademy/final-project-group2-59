@@ -49,7 +49,7 @@ export const HomeAndAbout = () => {
 
         </div>
       </section>
-      
+
       {/* ABOUT */}
       <section id="about-section" className="container home_about-us-section my-5">
         <div className="home_about-us-title text-center mb-4">
@@ -126,12 +126,8 @@ export const HomeAndAbout = () => {
             >
               Dona</button>
             <button className="boton btn home_btn-orange"
-              onClick={() =>
-                window.open(
-                  'https://www.instagram.com/',
-                  '_blank'
-                )
-              }>
+
+            >
               Difunde</button>
           </div>
         </div>
@@ -141,6 +137,10 @@ export const HomeAndAbout = () => {
           <p>“No compres amor, rescátalo.”</p>
           <p>“Una adopción no cambia el mundo, pero sí el mundo de un peludito.”</p>
           <p>“Un hogar no se compra, se construye con cariño.”</p>
+        </div>
+
+        <div className=" my-5 text-center">
+          <h2 className="home_about-us-title mb-3">Creado con ❤️ por nuestros <a href="/info-developers" style={{ color: 'inherit' }}>desarrolladores</a></h2>
         </div>
 
 

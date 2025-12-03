@@ -22,6 +22,7 @@ import { Protectedadmin } from "./components/Protectedadmin";
 import { Dashboard } from "./pages/Dashboard";
 import { PetManagent } from "./pages/PetManagent";
 import { PetEdit } from "./pages/PetEdit";
+import { InfoDevelopers } from "./pages/InfoDevelopers";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +45,7 @@ export const router = createBrowserRouter(
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="/info-developers" element={<InfoDevelopers />} />
       <Route path="/dashboard" element={
         <Protectedadmin>
           <Dashboard />

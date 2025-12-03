@@ -58,8 +58,13 @@ export const PetRegister = () => {
         formData.append("description", pet.description || "");
 
         try {
+            const token = localStorage.getItem("token");
+
             const response = await fetch(`${url}/api/petregister`, {
                 method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
                 body: formData
             });
 

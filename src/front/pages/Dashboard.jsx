@@ -14,7 +14,7 @@ export const Dashboard = () => {
 
 
     return (
-        <div className="vh-100 container d-flex justify-content-center align-items-center">
+        <div className="vh-100 container d-flex flex-column flex-md-row justify-content-center align-items-center">
             <button className="btn dashboard_btn">Administrar usuarios</button>
             <button className="btn dashboard_btn"
                 onClick={goToPetRegister}

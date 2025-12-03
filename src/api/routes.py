@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation, sexPetEnum, speciesPetEnum, statusPetEnum
-from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success
+from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success, admin_required
 from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -162,6 +162,8 @@ def get_pet(pet_id):
 
 
 @api.route('/petregister', methods=["POST"])
+@jwt_required()
+@admin_required
 def pet_register():
     try:
         data_form = request.form
@@ -215,12 +217,13 @@ def pet_register():
         db.session.rollback()
         return jsonify({"message": "Invalid date format or enum value", "error": str(e)}), 400
     except Exception as error:
-        print(f"Error creating pet: {error}")
         db.session.rollback()
         return jsonify({"message": "Error creating pet", "Error": str(error)}), 500
 
 
 @api.route('/pet/<int:pet_id>', methods=['DELETE'])
+@jwt_required()
+@admin_required
 def delete_pet(pet_id):
     pet = Pet.query.get(pet_id)
 
@@ -234,6 +237,8 @@ def delete_pet(pet_id):
 
 
 @api.route('/pet/<int:pet_id>', methods=['PUT'])
+@jwt_required()
+@admin_required
 def update_pet(pet_id):
     try:
         pet = Pet.query.get(pet_id)
