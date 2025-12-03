@@ -42,7 +42,7 @@ export const SendMailToResetPassword = () => {
     }
 
     return (
-        <div className="container send-mail-body">
+        <div className="container send-mail-body mt-5">
             <Toaster position="top-center" />
             <h1 className="text-center">¿Olvidaste tu contraseña?</h1>
             <div className="form-group container-blue-send-mail d-flex justify-content-center rounded-4">
