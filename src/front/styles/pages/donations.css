@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap");
+
+@media (max-width: 768px) {
+  .card-donations {
+    width: 100%;
+    max-width: 420px;
+    min-width: 320px;
+    margin-top: 50px !important;
+    margin-bottom: 0 !important;
+    border-radius: 50px 50px 0 0 !important;
+  }
+  .col-5 {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .donations-bg {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end !important;
+    padding: 0 !important;
+  }
+}
+
+.card-donations {
+  margin-top: 100px;
+  width: 450px;
+  border-radius: 50px 50px 50px 50px !important;
+}
+
+.card-title {
+  color: #376c73;
+  font-size: 39px;
+}
+
+.texto-hero {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
+  max-width: 550px;
+}
+
+.texto-hero h1,
+.texto-hero p,
+.texto-hero h2 {
+  margin-bottom: 12px;
+}
+
+.logo-text {
+  color: #376c73;
+  font-family: "Baloo Chettan 2", cursive;
+  font-size: 29px;
+
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+.logo-icon {
+  height: 60px;
+  width: auto;
+  margin-right: 6px;
+}
+
+.form-control {
+  background-color: rgb(206, 206, 206);
+}
+
+.btn-donations {
+  background-color: #ff8a3d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 3px 8px rgba(255, 138, 61, 0.4);
+}
+
+.btn-donations:hover {
+  background-color: #cf6e37;
+  transform: scale(1.02);
+  color: white;
+}
+
+.btn-donations:active {
+  transform: scale(0.98);
+}
+
+.dog-card {
+  width: 260px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.rotate-1 {
+  transform: rotate(-3deg);
+}
+.rotate-2 {
+  transform: rotate(1deg);
+}
+.rotate-3 {
+  transform: rotate(-2deg);
+}
+.rotate-4 {
+  transform: rotate(2deg);
+}
+
+.clavo {
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b3b;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.card-move {
+  transition: transform 0.25s ease;
+}
+
+.card-move:hover {
+  transform: translateY(-6px);
+}

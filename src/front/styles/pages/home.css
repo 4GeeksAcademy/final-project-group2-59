@@ -1,0 +1,87 @@
+/* HOME PAGE RESPONSIVE LAYOUT */
+.home-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem 1rem;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  gap: 2rem;
+}
+
+.home_pets {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  order: 1;
+}
+
+.home-content {
+  text-align: center;
+  order: 2;
+}
+
+/* Responsive: Pantalla completa (Desktop) */
+@media (min-width: 768px) {
+  .home-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .home_pets {
+    order: 2; /* Imagen a la derecha en desktop */
+    max-width: 450px;
+  }
+
+  .home-content {
+    order: 1; /* Contenido a la izquierda en desktop */
+    text-align: left;
+    flex: 1;
+  }
+
+  .home-content .d-flex {
+    justify-content: flex-start !important;
+  }
+}
+
+/* Buttons Styles */
+.boton {
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.boton:hover {
+  opacity: 0.9;
+}
+
+.home_btn-orange {
+  background-color: #e78951;
+  color: #ffffff;
+}
+
+.home_btn-green {
+  background-color: #376c73;
+  color: #ffffff;
+}
+
+/* Configuración sobre nosotros */
+
+.home_about-us-text {
+  font-size: 1.3rem;
+}
+.home_about-us-icon{
+  font-size: 3rem;
+  color: #e78951;
+}

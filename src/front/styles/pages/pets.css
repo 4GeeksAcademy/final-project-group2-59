@@ -1,0 +1,25 @@
+.pets_title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.pets_sex-icon {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.petcard_img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pets_title{
+  font-size: 3rem;
+  font-weight: bold;
+  color: #376c73;
+}

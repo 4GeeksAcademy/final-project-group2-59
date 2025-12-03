@@ -1,0 +1,27 @@
+.container-blue {
+  background-color: #376c73;
+  /* height: 40rem; */
+}
+
+.login-form {
+  height: 45rem;
+  margin: -2rem 0rem;
+}
+
+.h1-login {
+  color: #376c73;
+}
+
+.boton-registrar {
+  background-color: #e78951;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color:#e6e6e6;
+}
+
+/* .text-right-login {
+  height: 40rem;
+} */
+
+

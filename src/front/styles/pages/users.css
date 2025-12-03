@@ -1,0 +1,28 @@
+.edit-user {
+  width: 3rem;
+}
+
+.guardar-userEdit {
+  background-color: #e78951;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #e6e6e6;
+}
+
+.form-editUser {
+  height: 30rem;
+}
+
+.h1-users {
+  color: #376c73;
+}
+
+.table-users {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
