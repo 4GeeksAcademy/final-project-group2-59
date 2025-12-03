@@ -46,9 +46,11 @@ export const Layout = () => {
 
     return (
         <ScrollToTop>
-            <Navbar />
-            <Outlet />
-            <Footer />
+            <div className="ScrollToTop">
+                <Navbar />
+                <Outlet />
+                <Footer />
+            </div>
         </ScrollToTop>
     )
 }
