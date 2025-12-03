@@ -3,10 +3,16 @@
 
 @media (max-width: 768px) {
   .card-donations {
-    width: 100% !important;
-    margin-top: auto !important;
+    width: 100%;
+    max-width: 420px;
+    min-width: 320px;
+    margin-top: 50px !important;
     margin-bottom: 0 !important;
     border-radius: 50px 50px 0 0 !important;
+  }
+  .col-5 {
+    display: flex !important;
+    justify-content: center !important;
   }
 
   .donations-bg {
