@@ -478,7 +478,7 @@ def change_password():
 
     if user is not None:
         salt = b64encode(os.urandom(32)).decode("utf-8")
-        password = generate_password_hash(f"{password.get("password")}{salt}")
+        password = generate_password_hash(f"{password.get('password')}{salt}")
 
         user.salt = salt
         user.password = password
