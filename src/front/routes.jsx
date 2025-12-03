@@ -23,6 +23,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Users } from "./pages/Users";
 import { PetManagent } from "./pages/PetManagent";
 import { PetEdit } from "./pages/PetEdit";
+import { InfoDevelopers } from "./pages/InfoDevelopers";
 import { UserEdit } from "./pages/UserEdit";
 import { SendMailToResetPassword } from "./pages/SendMailToResetPassword";
 import { ChangePassword } from "./pages/ChangePassword"
@@ -50,6 +51,7 @@ export const router = createBrowserRouter(
       <Route path="/pet/:petId" element={<Pet />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/favorites" element={<Favorites />} />
+      <Route path="/info-developers" element={<InfoDevelopers />} />
       <Route path="/dashboard" element={
         <Protectedadmin>
           <Dashboard />

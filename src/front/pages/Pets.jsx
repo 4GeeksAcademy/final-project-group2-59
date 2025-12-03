@@ -8,7 +8,7 @@ const url = import.meta.env.VITE_BACKEND_URL
 export const Pets = () => {
 
     const [pets, setPets] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPets = async () => {
@@ -37,7 +37,7 @@ export const Pets = () => {
     return (
         <>
             <div className="d-flex justify-content-center p-5">
-                <h1 className="text-dark logo-text pets_title">BUSCANDO FAMILIA</h1>
+                <h1 className="logo-text pets_title">BUSCANDO FAMILIA</h1>
             </div>
             <div className="container text-center">
                 {
