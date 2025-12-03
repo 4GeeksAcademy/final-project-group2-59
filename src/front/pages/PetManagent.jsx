@@ -37,8 +37,13 @@ export const PetManagent = () => {
     const handleDelete = async (petId) => {
         if (window.confirm("¿Estás seguro de que deseas eliminar esta mascota?")) {
             try {
+                const token = localStorage.getItem("token");
+
                 const response = await fetch(`${url}/api/pet/${petId}`, {
                     method: 'DELETE',
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 });
 
                 if (response.ok) {

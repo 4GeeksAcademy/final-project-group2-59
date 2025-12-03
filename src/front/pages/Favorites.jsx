@@ -3,6 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { PetCard } from "../components/PetCard";
 import { Spinner } from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
+import "../styles/pages/favorites.css";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -52,11 +53,11 @@ export const Favorites = () => {
     if (loading) {
         return <Spinner />;
     }
-
+    
     return (
         <>
             <div className="d-flex justify-content-center p-5">
-                <h1 className="text-dark logo-text pets_title">FAVORITOS</h1>
+                <h1 className="logo-text pets_title">FAVORITOS</h1>
             </div>
             <div className="container text-center">
                 {

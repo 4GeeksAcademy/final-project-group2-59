@@ -100,8 +100,13 @@ export const PetEdit = () => {
         }
 
         try {
+            const token = localStorage.getItem("token");
+
             const response = await fetch(`${url}/api/pet/${petId}`, {
                 method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
                 body: formData
             });
 

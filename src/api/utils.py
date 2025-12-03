@@ -4,6 +4,8 @@ import base64
 import requests
 import os
 from api.email_services import send_email
+from flask_jwt_extended import get_jwt_identity
+from functools import wraps
 
 
 class APIException(Exception):
@@ -108,3 +110,24 @@ def send_donation_success(to_email, amount):
     </div>
     """
     send_email(to_email, "Donación Exitosa", html)
+
+
+def admin_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        from api.models import User
+        user_id = get_jwt_identity()
+        
+        if not user_id:
+            return jsonify({"message": "Authentication required"}), 401
+        
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+        
+        if user.role.name != "ADMIN":
+            return jsonify({"message": "Admin access required"}), 403
+        
+        return fn(*args, **kwargs)
+    return wrapper
