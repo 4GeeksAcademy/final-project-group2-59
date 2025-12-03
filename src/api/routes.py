@@ -479,7 +479,7 @@ def change_password():
 
         try:
             db.session.commit()
-            return jsonify({"message": "Contraseña actualizada exitosamente"})
+            return jsonify({"message": "Contraseña actualizada exitosamente"}), 200
         except Exception as error:
             return jsonify({"message": f"Error al actualizar contraseña {error}"})
 

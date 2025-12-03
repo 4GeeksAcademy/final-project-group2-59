@@ -111,7 +111,7 @@ export const Register = () => {
                         <p className="mb-4 fs-5 text-light fw-light">
                             Inicia Sesión para que seas parte de nuestra <br /> comunidad.
                         </p>
-                        <Link to="/login" className="boton-iniciar-sesion btn btn-outline-light btn-lg rounded-5 border-3">Iniciar Sesion</Link>
+                        <Link to="/login" className="boton-iniciar-sesion btn btn-lg rounded-5 border-3">Iniciar Sesion</Link>
                     </div>
                     <div className="col-12 col-md-6">
                         <form
@@ -213,7 +213,7 @@ export const Register = () => {
                                     <div className="text-danger mt-2">{error.confirm}</div>
                                 )}
                             </div>
-                            <button className="btn btn-outline-primary col-12">
+                            <button className="boton-iniciar-sesion btn col-12">
                                 Registrar
                             </button>
                         </form>
