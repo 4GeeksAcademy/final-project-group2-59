@@ -170,11 +170,12 @@ def pet_register():
         data = {
             "name": data_form.get("petname"),
             "birthdate": data_form.get("birthdate"),
-            "species": data_form.get("species"),
+            "species": speciesPetEnum[data_form.get("species")],
             "breed": data_form.get("breed"),
-            "sex": data_form.get("sex"),
+            "sex": sexPetEnum[data_form.get("sex")],
             "description": data_form.get("description"),
-            "image_db": data_files.get("image")
+            "image_db": data_files.get("image"),
+            "status": statusPetEnum["LOOKING_FOR_FAMILY"]
         }
 
         print(data)
@@ -191,7 +192,7 @@ def pet_register():
             species=data["species"],
             breed=data["breed"],
             sex=data["sex"],
-            status="LOOKING_FOR_FAMILY",
+            status= data["status"],
             description=data["description"],
             image=image,
         )
@@ -243,7 +244,7 @@ def update_pet(pet_id):
                 data_form.get("birthdate"), "%Y-%m-%d").date()
 
         if data_form.get("species"):
-            pet.species = data_form.get("species")
+            pet.species = speciesPetEnum[data_form.get("species")]
 
         print(pet.serialize(), "UPDATED PET")
 
@@ -251,13 +252,13 @@ def update_pet(pet_id):
             pet.breed = data_form.get("breed")
 
         if data_form.get("sex"):
-            pet.sex = data_form.get("sex")
+            pet.sex = sexPetEnum[data_form.get("sex")]
 
         if data_form.get("description"):
             pet.description = data_form.get("description")
 
         if data_form.get("status"):
-            pet.status = data_form.get("status")
+            pet.status = statusPetEnum[data_form.get("status")]
 
         image_db = data_files.get("image")
         if image_db is not None:
