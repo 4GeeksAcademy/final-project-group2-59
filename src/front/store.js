@@ -48,11 +48,12 @@ export default function storeReducer(store, action = {}) {
         isAuthenticated: false,
       };
 
-    case "SET_USER":
-      return {
-        ...store,
-        user: action.payload,
-      };
+  case "SET_USER":
+  localStorage.setItem("user", JSON.stringify(action.payload));
+  return {
+    ...store,
+    user: action.payload,
+  };
 
     case "SET_FAVORITES":
       return {

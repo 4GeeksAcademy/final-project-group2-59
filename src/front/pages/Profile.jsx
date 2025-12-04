@@ -58,13 +58,14 @@ export const Profile = () => {
             setLocalUser({
                 full_name: store.user.full_name || "",
                 email: store.user.email || "",
-                gender: store.user.gender?.toUpperCase() || "",
+                gender: store.user.gender ? store.user.gender.toUpperCase() : "",
                 birthdate: store.user.birthdate
                     ? store.user.birthdate.split("T")[0]
                     : "",
             });
         }
     }, [store.user]);
+
 
     return (
         <div className="container mt-5 mb-5 p-4 border rounded shadow-sm bg-white profile-form">
