@@ -5,7 +5,7 @@ import { Spinner } from "../components/Spinner.jsx";
 
 
 
-let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
+let API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Success() {
     const location = useLocation();
@@ -36,7 +36,7 @@ export default function Success() {
     };
 
     const registerPayment = async (paypalData) => {
-        const response = await fetch(`${API_URL}api/donations/register`, {
+        const response = await fetch(`${API_URL}/api/donations/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

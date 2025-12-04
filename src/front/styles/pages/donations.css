@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap");
 
-@media (max-width: 768px) {
+@media (max-width: 776px) {
   .card-donations {
     width: 100%;
     max-width: 420px;
@@ -9,6 +9,7 @@
     margin-top: 50px !important;
     margin-bottom: 0 !important;
     border-radius: 50px 50px 0 0 !important;
+    margin-left: auto;
   }
   .col-5 {
     display: flex !important;
@@ -27,6 +28,7 @@
 .card-donations {
   margin-top: 100px;
   width: 450px;
+  min-width: 450px;
   border-radius: 50px 50px 50px 50px !important;
 }
 
