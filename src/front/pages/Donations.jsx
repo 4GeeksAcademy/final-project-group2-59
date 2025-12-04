@@ -4,7 +4,7 @@ import "../../front/styles/pages/donations.css";
 import { DogCard } from "../components/DonationCard.jsx";
 import { Spinner } from "../components/Spinner.jsx";
 
-let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
+let API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const Donations = () => {
     const formRef = useRef(null);
@@ -13,18 +13,18 @@ export const Donations = () => {
 
 
     const dogCardsColumn = [
-        { rotate: "rotate-1", img: "src/front/pages/img/perro1.jpg", text: "Rocco necesita medicinas para su artritis." },
-        { rotate: "rotate-2", img: "src/front/pages/img/perro2.jpg", text: "Misha necesita una cama cálida para los días fríos." },
+        { rotate: "rotate-1", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849381/perro1_g9nboj.jpg", text: "Rocco necesita medicinas para su artritis." },
+        { rotate: "rotate-2", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849505/perro2_bggkyl.webp", text: "Misha necesita una cama cálida para los días fríos." },
     ];
 
     const dogCardsColumn2 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro3.jpg", text: "Luna necesita vacunas para mantenerse saludable." },
-        { rotate: "rotate-4", img: "src/front/pages/img/perro4.jpg", text: "Toby necesita juguetes para estimular su mente y energía." },
+        { rotate: "rotate-3", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849534/perro3_k6gih2.avif", text: "Luna necesita vacunas para mantenerse saludable." },
+        { rotate: "rotate-4", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849576/perro4_z97adm.jpg", text: "Toby necesita juguetes para estimular su mente y energía." },
     ];
 
     const dogCardsColumn3 = [
-        { rotate: "rotate-3", img: "src/front/pages/img/perro5.jpg", text: "Bella necesita transporte seguro para ir al veterinario." },
-        { rotate: "rotate-4", img: "src/front/pages/img/perro6.jpg", text: "Simba necesita ropa especial por su piel sensible." },
+        { rotate: "rotate-3", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849595/perro5_dadm4u.webp", text: "Bella necesita transporte seguro para ir al veterinario." },
+        { rotate: "rotate-4", img: "https://res.cloudinary.com/dnkalrt1u/image/upload/v1764849613/perro6_ssy7ym.webp", text: "Simba necesita ropa especial por su piel sensible." },
     ];
 
 
@@ -54,7 +54,7 @@ export const Donations = () => {
 
     const createOrder = async () => {
         try {
-            const response = await fetch(`${API_URL}api/donations/create-paypal-order`, {
+            const response = await fetch(`${API_URL}/api/donations/create-paypal-order`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export const Donations = () => {
                     <Spinner />
                 </div>
             )}
-            <div className="row">
+            <div className="row justify-content-center text-center text-md-start">
                 <div className="col-2 d-none d-md-flex flex-column justify-content-center align-items-center mt-5 m-3">
                     {dogCardsColumn.map((c, i) => (
                         <DogCard
