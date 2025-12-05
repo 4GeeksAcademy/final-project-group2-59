@@ -297,8 +297,8 @@ def create_paypal_order():
             }
         ],
         "application_context": {
-            "return_url": "https://fictional-winner-59p6pwq7694fpxgq-3000.app.github.dev/success",
-            "cancel_url": "https://fictional-winner-59p6pwq7694fpxgq-3000.app.github.dev"
+            "return_url": f"{os.getenv("VITE_FRONTEND_URL")}success",
+            "cancel_url": f"{os.getenv("VITE_FRONTEND_URL")}"
         }
     }
 
