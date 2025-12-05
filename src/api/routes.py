@@ -297,8 +297,8 @@ def create_paypal_order():
             }
         ],
         "application_context": {
-            "return_url": f"{os.getenv("VITE_FRONTEND_URL")}success",
-            "cancel_url": f"{os.getenv("VITE_FRONTEND_URL")}"
+            "return_url": f"{os.getenv('VITE_FRONTEND_URL')}success",
+            "cancel_url": f"{os.getenv('VITE_FRONTEND_URL')}"
         }
     }
 
