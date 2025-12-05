@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation, sexPetEnum, speciesPetEnum, statusPetEnum
 from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success, admin_required
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -14,8 +14,8 @@ import requests
 from datetime import datetime, timezone, timedelta
 from api.email_services import send_email
 
+
 api = Blueprint("api", __name__)
-CORS(api, resources={r"/*": {"origins": "*"}})
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -192,7 +192,7 @@ def pet_register():
             species=data["species"],
             breed=data["breed"],
             sex=data["sex"],
-            status= data["status"],
+            status=data["status"],
             description=data["description"],
             image=image,
         )
@@ -321,6 +321,7 @@ def create_paypal_order():
 
 
 @api.route('/donations/capture', methods=['POST'])
+@cross_origin()
 def capture_payment():
     data = request.json
 
@@ -340,6 +341,8 @@ def capture_payment():
 
     response = requests.post(url, headers=headers)
     result = response.json()
+    print("==== RAW PAYPAL RESPONSE ====")
+    print(result)
 
     payer = result["purchase_units"][0]["payments"]["captures"][0]
 

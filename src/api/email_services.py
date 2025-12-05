@@ -25,5 +25,3 @@ def send_email(to_email, subject, html_content):
         return True
     except Exception as error:
         return False
-
-
