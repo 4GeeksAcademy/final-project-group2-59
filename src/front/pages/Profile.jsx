@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../front/styles/pages/profile.css";
 
-let API_URL = "https://fictional-winner-59p6pwq7694fpxgq-3001.app.github.dev/";
+let API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const Profile = () => {
     const { store, dispatch } = useGlobalReducer();
@@ -18,7 +18,7 @@ export const Profile = () => {
     const putUser = async (user) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${API_URL}api/edit-user`, {
+            const response = await fetch(`${API_URL}/api/edit-user`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,8 +38,8 @@ export const Profile = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { full_name, email, birthdate } = localUser;
-        const updatedUser = await putUser({ full_name, email, birthdate });
+        const { full_name, email, birthdate, gender } = localUser;
+        const updatedUser = await putUser({ full_name, email, birthdate, gender });
         if (updatedUser) {
             dispatch({ type: "SET_USER", payload: updatedUser });
             alert("Usuario actualizado correctamente");
@@ -53,6 +53,19 @@ export const Profile = () => {
         const { name, value } = e.target;
         setLocalUser({ ...localUser, [name]: value });
     };
+    useEffect(() => {
+        if (store.user) {
+            setLocalUser({
+                full_name: store.user.full_name || "",
+                email: store.user.email || "",
+                gender: store.user.gender ? store.user.gender.toUpperCase() : "",
+                birthdate: store.user.birthdate
+                    ? store.user.birthdate.split("T")[0]
+                    : "",
+            });
+        }
+    }, [store.user]);
+
 
     return (
         <div className="container mt-5 mb-5 p-4 border rounded shadow-sm bg-white profile-form">
@@ -84,14 +97,19 @@ export const Profile = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Género</label>
-                    <input
-                        type="text"
-                        name="gender"
-                        className="form-control"
-                        value={localUser.gender}
+                    <label htmlFor="forGender">Genero:</label>
+                    <select
                         onChange={handleChange}
-                    />
+                        className="form-control"
+                        name="gender"
+                        id="forGender"
+                        value={localUser.gender}
+                    >
+                        <option value="">Elije...</option>
+                        <option value="MASCULINO">Masculino</option>
+                        <option value="FEMENINO">Femenino</option>
+                        <option value="OTRO">Otro</option>
+                    </select>
                 </div>
 
                 <div className="mb-3">

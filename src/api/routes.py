@@ -14,8 +14,8 @@ import requests
 from datetime import datetime, timezone, timedelta
 from api.email_services import send_email
 
+
 api = Blueprint("api", __name__)
-CORS(api, resources={r"/*": {"origins": "*"}})
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -192,7 +192,7 @@ def pet_register():
             species=data["species"],
             breed=data["breed"],
             sex=data["sex"],
-            status= data["status"],
+            status=data["status"],
             description=data["description"],
             image=image,
         )
@@ -340,6 +340,8 @@ def capture_payment():
 
     response = requests.post(url, headers=headers)
     result = response.json()
+    print("==== RAW PAYPAL RESPONSE ====")
+    print(result)
 
     payer = result["purchase_units"][0]["payments"]["captures"][0]
 
@@ -454,8 +456,6 @@ def send_mail_reset_password():
             """
     subject = "Cambiar contraseña"
     email = data.get("email")
-
-    print(email)
 
     try:
         response = send_email(email, subject, html)

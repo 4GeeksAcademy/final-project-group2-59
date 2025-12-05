@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Spinner } from "../components/Spinner.jsx";
 import "../styles/components/petManagement.css";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -35,7 +36,18 @@ export const PetManagent = () => {
 
 
     const handleDelete = async (petId) => {
-        if (window.confirm("¿Estás seguro de que deseas eliminar esta mascota?")) {
+        const result = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás revertir esta acción!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        });
+
+        if (result.isConfirmed) {
             try {
                 const token = localStorage.getItem("token");
 
@@ -48,12 +60,24 @@ export const PetManagent = () => {
 
                 if (response.ok) {
                     setPets(pets.filter(pet => pet.id !== petId));
-                    alert("Mascota eliminada exitosamente");
+                    Swal.fire({
+                        title: "¡Eliminada!",
+                        text: "La mascota ha sido eliminada exitosamente.",
+                        icon: "success"
+                    });
                 } else {
-                    alert("Error al eliminar la mascota");
+                    Swal.fire({
+                        title: "Error",
+                        text: "Error al eliminar la mascota",
+                        icon: "error"
+                    });
                 }
             } catch (error) {
-                alert("Error al eliminar la mascota");
+                Swal.fire({
+                    title: "Error",
+                    text: "Error al eliminar la mascota",
+                    icon: "error"
+                });
             }
         }
     };
