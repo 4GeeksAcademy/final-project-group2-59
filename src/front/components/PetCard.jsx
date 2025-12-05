@@ -94,28 +94,24 @@ export const PetCard = ({ pet }) => {
     };
 
     return (
-        <div className="">
-            <div className="d-flex justify-content-center">
-                <div className="card p-3" >
-                    <img src={imageURL} className="card-img-top petcard_img" alt={pet.name} />
-                    <div className="card-body">
-                        <div className="pets_title-container">
-                            <h2 className="card-title">{pet.name}</h2>
-                            {getSexIcon()}
-                        </div>
-                        <h4>Edad: {calculateAge()}</h4>
-                        <div className="d-flex justify-content-between mt-3 p-2">
-                            <button
-                                className={isFavorite ? "btn btn-danger" : "btn btn-outline-danger"}
-                                type="button"
-                                onClick={handleFavoriteClick}
-                                disabled={isProcessing}
-                            >
-                                <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
-                            </button>
-                            <Link to={`/pet/${pet.id}`} className="btn btn-light">Más sobre mi...</Link>
-                        </div>
-                    </div>
+        <div className="card petcard p-3 h-100">
+            <img src={imageURL} className="card-img-top petcard_img" alt={pet.name} />
+            <div className="card-body">
+                <div className="pets_title-container">
+                    <h2 className="card-title">{pet.name}</h2>
+                    {getSexIcon()}
+                </div>
+                <h4>Edad: {calculateAge()}</h4>
+                <div className="d-flex justify-content-between mt-3 p-2">
+                    <button
+                        className={isFavorite ? "btn btn-danger" : "btn btn-outline-danger"}
+                        type="button"
+                        onClick={handleFavoriteClick}
+                        disabled={isProcessing}
+                    >
+                        <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
+                    </button>
+                    <Link to={`/pet/${pet.id}`} className="btn btn-light">Más sobre mi...</Link>
                 </div>
             </div>
         </div>
