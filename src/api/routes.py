@@ -455,8 +455,6 @@ def send_mail_reset_password():
     subject = "Cambiar contraseña"
     email = data.get("email")
 
-    print(email)
-
     try:
         response = send_email(email, subject, html)
 
