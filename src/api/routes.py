@@ -4,7 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Pet, Favorite, Bills, Donation, sexPetEnum, speciesPetEnum, statusPetEnum
 from api.utils import generate_sitemap, APIException, valid_email, get_paypal_token, send_donation_success, admin_required
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from base64 import b64encode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
@@ -321,7 +321,6 @@ def create_paypal_order():
 
 
 @api.route('/donations/capture', methods=['POST'])
-@cross_origin()
 def capture_payment():
     data = request.json
 
