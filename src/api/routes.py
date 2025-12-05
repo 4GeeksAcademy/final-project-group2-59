@@ -511,3 +511,34 @@ def edit_user():
 
     db.session.commit()
     return jsonify(user.serialize()), 200
+
+@api.route("/users", methods=["GET"])
+def users_info():
+
+    users = User.query.all()
+
+    users = list(map(lambda item: item.serialize(), users))
+
+    return jsonify(users), 200
+
+@api.route("/user/<int:user_id>", methods=["PUT"])
+def change_user(user_id):
+
+    data = request.get_json()
+
+    role = data.get("role")
+    status = data.get("status")
+
+    user = User.query.get(user_id)
+
+    if user is not None:
+        user.role = role
+        user.status = status
+
+        try:
+            db.session.commit()
+            return jsonify({"message": "Usuario actualizado exitosamente"}), 200
+        except Exception as error:
+            return jsonify({"message": f"Error al actualizar el usuario: {error}"}), 500
+    else:
+        return jsonify({"message": "Ocurrio un error inesperado, intente mas tarde"}), 400
